@@ -1,0 +1,297 @@
+{
+	"info": {
+		"_postman_id": "eaa5221b-a88e-4f26-8df8-ab07a18fa315",
+		"name": "Notworth",
+		"description": "The **notworth** API allows to create portfolios, positions and value of positions.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Portfolios",
+			"item": [
+				{
+					"name": "Portfolios",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}:{{port}}/{{portfolios}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"{{portfolios}}"
+							]
+						},
+						"description": "Returns all the portfolios of a user. A user might have a private and a company portfolio which he likes to separate."
+					},
+					"response": []
+				},
+				{
+					"name": "Portfolio by Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}:{{port}}/{{portfolios}}/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"{{portfolios}}",
+								"1"
+							]
+						},
+						"description": "Returns one specific portfolio of a user containing the networth and the single positions."
+					},
+					"response": []
+				},
+				{
+					"name": "Create a portfolio",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"My Personal Networth\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}:{{port}}/{{portfolios}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"{{portfolios}}"
+							]
+						},
+						"description": "Creates a new portfolio for the current user."
+					},
+					"response": []
+				}
+			],
+			"description": "Manage the portfolios of a user."
+		},
+		{
+			"name": "Categories",
+			"item": [
+				{
+					"name": "Get categories of a portfolio",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}:{{port}}/{{portfolios}}/1/{{categories}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"{{portfolios}}",
+								"1",
+								"{{categories}}"
+							]
+						},
+						"description": "Returns all the categories created for a certain portfolio."
+					},
+					"response": []
+				},
+				{
+					"name": "Create a category for a portfolio",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"stocks\",\r\n    \"description\": \"All my stock portfolios.\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}:{{port}}/{{portfolios}}/1/{{categories}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"{{portfolios}}",
+								"1",
+								"{{categories}}"
+							]
+						},
+						"description": "Creates a new category for a portfolio."
+					},
+					"response": []
+				},
+				{
+					"name": "Get a category of a portfolio",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}:{{port}}/{{portfolios}}/1/{{categories}}/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"{{portfolios}}",
+								"1",
+								"{{categories}}",
+								"1"
+							]
+						},
+						"description": "Get the informations about a single category."
+					},
+					"response": []
+				}
+			],
+			"description": "Categories allows you to group different positions like \"savings\", \"stocks\" or \"retirement\""
+		},
+		{
+			"name": "Positions",
+			"item": [
+				{
+					"name": "Get all positions for a portfolio",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}:{{port}}/{{portfolios}}/1/{{positions}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"{{portfolios}}",
+								"1",
+								"{{positions}}"
+							]
+						},
+						"description": "Returns all the positions of a portfolio."
+					},
+					"response": []
+				},
+				{
+					"name": "Add a position for a porfolio",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"LUKB Sparen\",\r\n    \"category\": \"savings\",\r\n    \"description\": \"My main savings account\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}:{{port}}/{{portfolios}}/1/{{positions}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"{{portfolios}}",
+								"1",
+								"{{positions}}"
+							]
+						},
+						"description": "Creates a new position."
+					},
+					"response": []
+				},
+				{
+					"name": "Get a position of a portfolio",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}:{{port}}/{{portfolios}}/1/{{positions}}/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"{{portfolios}}",
+								"1",
+								"{{positions}}",
+								"1"
+							]
+						},
+						"description": "Returns a single position in the portfolio."
+					},
+					"response": []
+				}
+			],
+			"description": "A position represents one \"account\" like a savings account, a brokerage account, ..."
+		},
+		{
+			"name": "Values",
+			"item": [
+				{
+					"name": "Add value of a position",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"value\": \"100\",\r\n    \"date\": \"2022-02-11\" \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}:{{port}}/{{portfolios}}/1/{{positions}}/1/{{values}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"{{portfolios}}",
+								"1",
+								"{{positions}}",
+								"1",
+								"{{values}}"
+							]
+						},
+						"description": "Add a value of a position at a certain point in time.\n\nThe date must not be in the future."
+					},
+					"response": []
+				},
+				{
+					"name": "Get values of a position",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}:{{port}}/{{portfolios}}/1/{{positions}}/1/{{values}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"{{portfolios}}",
+								"1",
+								"{{positions}}",
+								"1",
+								"{{values}}"
+							]
+						},
+						"description": "Returns all the past values of a position."
+					},
+					"response": []
+				}
+			],
+			"description": "The value of a position represents the value in CHF at a certain point of time."
+		}
+	]
+}
