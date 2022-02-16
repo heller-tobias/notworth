@@ -1,5 +1,5 @@
 interface Portfolio{
-    id: number,
+    id: string,
     name: string,
     description: string
 }
