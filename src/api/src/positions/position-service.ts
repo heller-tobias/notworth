@@ -29,7 +29,7 @@ class PositionService {
                     param('portfolioId', 'portfolio does not exist').exists().isString().bail().custom((value, {req}) => this.portfolioExists(value, userId, {req})),
                     body('category', 'category does not exist').exists().bail().custom((value, { req }) => this.categoryService.getCategories(userId, req.params.portfolioId).includes(value))
                 ]
-            };break;
+            };
             case 'getPosition': {
                 return [
                     param('portfolioId', 'portfolio does not exist').exists().isString().bail().custom((value, {req}) => this.portfolioExists(value, userId, {req})),

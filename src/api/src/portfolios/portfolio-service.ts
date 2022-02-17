@@ -6,6 +6,7 @@ import { CategoryService } from "../categories/category-service";
 
 class PortfolioService {
     db: NotworthDatabase;
+    POSITIONS: string = "positions";
 
     constructor(db: NotworthDatabase) {
         this.db = db;
@@ -45,11 +46,28 @@ class PortfolioService {
     }
 
     async getPortfolios(userId: string) {
-        return this.db.getPortfolios(userId);
+        const result = await this.db.getPortfolios(userId);
+        if(!result){
+            return null;
+        }
+        else if(! result.length){
+            return result;
+        }
+        const returnValue = [];
+        for(const portfolio of result){
+            portfolio[this.POSITIONS] = await this.db.getPositions(userId, portfolio["id"]);
+            returnValue.push(portfolio);
+        }
+        return returnValue;
     }
 
     async getPortfolioById(userId: string, portfolioId: string) {
-        return this.db.getPortfolioById(userId, portfolioId);
+        const result = await this.db.getPortfolioById(userId, portfolioId);
+        if(!result){
+            return null;
+        }
+        result[this.POSITIONS] = await this.db.getPositions(userId, result["id"]);
+        return result;
     }
 
     async addPortfolio(userId: string, portfolio: Portfolio) {
