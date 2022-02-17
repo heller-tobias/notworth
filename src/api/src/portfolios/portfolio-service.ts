@@ -35,13 +35,9 @@ class PortfolioService {
                 return;
             }
 
-            console.log(req.body)
-
             const { name, description, userId } = req.body
 
             const portfolio: Portfolio = { id: "", name: name, description: description }
-            console.log(portfolio)
-            console.log(this);
             res.json(await this.addPortfolio(userId, portfolio));
         } catch (err) {
             return next(err)

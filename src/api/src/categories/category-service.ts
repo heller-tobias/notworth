@@ -11,7 +11,7 @@ class CategoryService {
         this.db.init();
     }
 
-    static getCategories(userId: string, portfolioId: string){
+    getCategories(userId: string, portfolioId: string){
         return ["savings", "investments", "retirement"];
     }
 }

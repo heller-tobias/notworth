@@ -6,15 +6,25 @@ import { Portfolio } from './portfolios/portfolio';
 import { PortfolioService } from './portfolios/portfolio-service';
 import { body, validationResult } from 'express-validator';
 import { parse } from 'dotenv';
+import { PositionService } from './positions/position-service';
+import { CategoryService } from './categories/category-service';
+
+
+const PORTFOLIOS_URL: string = "portfolios";
+const POSITIONS_URL: string = "positions";
 
 const app = express();
 const port = 3000;
-const PORTFOLIOS_URL = "portfolios";
 app.use(bodyParser.json());
+let router = express.Router();
 
 const portfolioService = new PortfolioService(new MongoDatabase(process.env.MONGO_DB_STRING))
+const categoryService = new CategoryService(new MongoDatabase(process.env.MONGO_DB_STRING))
+const positionService = new PositionService(new MongoDatabase(process.env.MONGO_DB_STRING), portfolioService, categoryService);
+
 portfolioService.init();
-let router = express.Router();
+positionService.init();
+categoryService.init();
 
 router.use((req, res, next) => {
   console.log('Time:', Date.now());
@@ -35,6 +45,7 @@ router.get(`/${PORTFOLIOS_URL}`, (req, res, nex) => {
 router.get(`/${PORTFOLIOS_URL}/:id`, (req, res, nex) => {
   const userId: string = parseUserId();
   portfolioService.getPortfolioById(userId, req.params.id).then((result) => {
+    console.log(result)
     if (!result) {
       res.status(404);
       res.end();
@@ -47,6 +58,11 @@ router.get(`/${PORTFOLIOS_URL}/:id`, (req, res, nex) => {
 router.post(`/${PORTFOLIOS_URL}`,
   portfolioService.validate('createPortfolio'),
   portfolioService.createPortfolio
+);
+
+router.post(`/${PORTFOLIOS_URL}/:portfolioId/${POSITIONS_URL}`,
+  positionService.validate('createPosition', parseUserId()),
+  positionService.createPosition
 );
 
 function parseUserId(): string {

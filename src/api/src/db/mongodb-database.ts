@@ -2,6 +2,7 @@ import { MongoClient } from "mongodb";
 import { Portfolio } from "../portfolios/portfolio";
 import { NotworthDatabase } from './notworth-database';
 import { v4 as uuidv4 } from 'uuid';
+import { Position } from "../positions/position";
 
 class MongoDatabase implements NotworthDatabase{
 
@@ -18,6 +19,7 @@ class MongoDatabase implements NotworthDatabase{
 
     async init(){
         const mongoClient = new MongoClient(this.connectionString);
+        console.log('Connecting to server...');
         this.client = await mongoClient.connect()
         console.log('Connected correctly to server');
         this.db = this.client.db('notworth');
@@ -38,6 +40,15 @@ class MongoDatabase implements NotworthDatabase{
 
     async getPortfolioById(userId: string, portfolioId: string): Promise<Portfolio[]> {
         return this.db.collection(this.portfoliosCollection).findOne({userId: userId, id: portfolioId}, {projection:{_id:0, userId: 0}});
+    }
+
+    async addPosition(userId: string, position: Position) {
+        let id: string = uuidv4();
+        console.log(id)
+        position["id"] = id;
+        position["userId"] = userId;
+        this.db.collection(this.positionsCollection).insertOne(position);
+        return id;
     }
 }
 
