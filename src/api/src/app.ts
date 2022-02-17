@@ -35,6 +35,9 @@ router.use((req, res, next) => {
   next();
 });
 
+/**
+ * Get all the Portfolios for the current user.
+ */
 router.get(`/${PORTFOLIOS_URL}`, (req, res, nex) => {
   const userId: string = parseUserId();
   portfolioService.getPortfolios(userId).then((result) => {
@@ -42,6 +45,9 @@ router.get(`/${PORTFOLIOS_URL}`, (req, res, nex) => {
   });
 });
 
+/**
+ * Get a Portfolio with the passed it.
+ */
 router.get(`/${PORTFOLIOS_URL}/:id`, (req, res, nex) => {
   const userId: string = parseUserId();
   portfolioService.getPortfolioById(userId, req.params.id).then((result) => {
@@ -55,11 +61,25 @@ router.get(`/${PORTFOLIOS_URL}/:id`, (req, res, nex) => {
   });
 });
 
-router.post(`/${PORTFOLIOS_URL}`,
-  portfolioService.validate('createPortfolio'),
-  portfolioService.createPortfolio
+/**
+ * Get all the Positions of a Portfolio with a certain id.
+ */
+router.get(`/${PORTFOLIOS_URL}/:portfolioId/${POSITIONS_URL}`,
+  positionService.validate('getPosition', parseUserId()),
+  positionService.getPositions
 );
 
+/**
+ * Get a Position of a Portfolio with a certain id.
+ */
+router.get(`/${PORTFOLIOS_URL}/:portfolioId/${POSITIONS_URL}/:id`,
+  positionService.validate('getPosition', parseUserId()),
+  positionService.getPositionById
+);
+
+/**
+ * Create a new position for the specified Portfolio.
+ */
 router.post(`/${PORTFOLIOS_URL}/:portfolioId/${POSITIONS_URL}`,
   positionService.validate('createPosition', parseUserId()),
   positionService.createPosition
