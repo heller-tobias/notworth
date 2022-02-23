@@ -73,9 +73,8 @@ class MongoDatabase implements NotworthDatabase {
 
     async getValues(userId: string, portfolioId: string, positionId: string) {
         console.log(`userId: ${userId}, portfolioId: ${portfolioId}, positionId: ${positionId}`)
-        return this.db.collection(this.positionsValuesCollection).find({ userId: userId, portfolioId: portfolioId, positionId: positionId }, { projection: { _id: 0, userId: 0, portfolioId: 0 } }).toArray();
+        return this.db.collection(this.positionsValuesCollection).find({ userId: userId, portfolioId: portfolioId, positionId: positionId }, { projection: { _id: 0, userId: 0, portfolioId: 0, positionId: 0}}).sort({date:-1}).toArray();
     }
-
 }
 
 export { MongoDatabase }

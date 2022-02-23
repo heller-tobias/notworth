@@ -9,6 +9,7 @@ class PositionService {
     db: NotworthDatabase;
     portfolioService: PortfolioService;
     categoryService: CategoryService;
+    VALUES: string = "values";
 
     constructor(db: NotworthDatabase, portfolioService: PortfolioService, categoryService: CategoryService) {
         this.db = db;
@@ -89,7 +90,7 @@ class PositionService {
 
             const { userId } = req.body;
             const portfolioId = req.params.portfolioId;
-            res.json(await this.db.getPositions(userId, portfolioId));
+            res.json(await this.getPositionsWithValuesById(userId, portfolioId));
 
         } catch (err) {
             return next(err)
@@ -117,12 +118,24 @@ class PositionService {
                 return;
             }
 
+            result[this.VALUES] = await this.db.getValues(userId, portfolioId, result["id"]);a
+
             res.json(result);
             
         } catch (err) {
             return next(err)
         }
     }
+
+    private async getPositionsWithValuesById(userId: string, portfolioId: string){
+        const positions = await this.db.getPositions(userId, portfolioId);
+        const returnPositions = [];
+        for (const position of positions) {
+            position[this.VALUES] = await this.db.getValues(userId, portfolioId, position["id"]);
+            returnPositions.push(position);
+        }
+        return returnPositions;
+    } 
 }
 
 export { PositionService }
