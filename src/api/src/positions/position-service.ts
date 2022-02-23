@@ -118,7 +118,7 @@ class PositionService {
                 return;
             }
 
-            result[this.VALUES] = await this.db.getValues(userId, portfolioId, result["id"]);a
+            result[this.VALUES] = await this.db.getValues(userId, portfolioId, result["id"]);
 
             res.json(result);
             
