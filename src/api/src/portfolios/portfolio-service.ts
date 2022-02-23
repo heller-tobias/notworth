@@ -3,11 +3,10 @@ import { NotworthDatabase } from "../db/notworth-database";
 import { Portfolio } from "./portfolio";
 const { body, validationResult } = require('express-validator/check')
 import { CategoryService } from "../categories/category-service";
+import { PayloadKey } from "../helper/api-definition";
 
 class PortfolioService {
     db: NotworthDatabase;
-    POSITIONS: string = "positions";
-    VALUES: string = "values";
 
     constructor(db: NotworthDatabase) {
         this.db = db;
@@ -57,7 +56,8 @@ class PortfolioService {
         const returnValue = [];
         for (var portfolio of result) {
             const positions = await this.db.getPositions(userId, portfolio["id"]);
-            portfolio[this.POSITIONS] = await this.getPositionsWithValuesById(userId, portfolio["id"]);;
+            portfolio[PayloadKey.POSITIONS] = await this.getPositionsWithValuesById(userId, portfolio["id"]);
+            portfolio[PayloadKey.TOTAL_VALUE] = 0;
             returnValue.push(portfolio);
         }
         return returnValue;
@@ -69,7 +69,7 @@ class PortfolioService {
             return null;
         }
        
-        result[this.POSITIONS] = await this.getPositionsWithValuesById(userId, result["id"]);
+        result[PayloadKey.POSITIONS] = await this.getPositionsWithValuesById(userId, result["id"]);
         return result;
     }
 
@@ -77,7 +77,7 @@ class PortfolioService {
         const positions = await this.db.getPositions(userId, portfolioId);
         const returnPositions = [];
         for (const position of positions) {
-            position[this.VALUES] = await this.db.getValues(userId, portfolioId, position["id"]);
+            position[PayloadKey.VALUES] = await this.db.getValues(userId, portfolioId, position["id"]);
             returnPositions.push(position);
         }
         return returnPositions;

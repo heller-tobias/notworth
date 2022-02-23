@@ -4,12 +4,12 @@ import { CategoryService } from "../categories/category-service";
 import { param } from "express-validator";
 import { Position } from "./position";
 import { PortfolioService } from "../portfolios/portfolio-service";
+import { PayloadKey } from "../helper/api-definition";
 
 class PositionService {
     db: NotworthDatabase;
     portfolioService: PortfolioService;
     categoryService: CategoryService;
-    VALUES: string = "values";
 
     constructor(db: NotworthDatabase, portfolioService: PortfolioService, categoryService: CategoryService) {
         this.db = db;
@@ -118,7 +118,7 @@ class PositionService {
                 return;
             }
 
-            result[this.VALUES] = await this.db.getValues(userId, portfolioId, result["id"]);
+            result[PayloadKey.VALUES] = await this.db.getValues(userId, portfolioId, result["id"]);
 
             res.json(result);
             
@@ -131,7 +131,7 @@ class PositionService {
         const positions = await this.db.getPositions(userId, portfolioId);
         const returnPositions = [];
         for (const position of positions) {
-            position[this.VALUES] = await this.db.getValues(userId, portfolioId, position["id"]);
+            position[PayloadKey.VALUES] = await this.db.getValues(userId, portfolioId, position["id"]);
             returnPositions.push(position);
         }
         return returnPositions;
