@@ -40,7 +40,18 @@ class PositionService {
 
     portfolioExists = async (value, userId, { req }) => {
         if (await this.portfolioService.getPortfolioById(userId, req.params.portfolioId)) {
-            console.log("resolve");
+            console.log("resolve portfolioExists");
+            return Promise.resolve();
+        }
+        else {
+            console.log("reject");
+            return Promise.reject();
+        }
+    }
+
+    positionExists = async (value, userId, { req }) => {
+        if (await this.db.getPositionById(userId, req.params.portfolioId, req.params.positionId)) {
+            console.log("resolve positionExists");
             return Promise.resolve();
         }
         else {

@@ -27,7 +27,7 @@ class PortfolioService {
         }
     }
 
-     createPortfolio = async(req: any, res: any, next: any) => {
+    createPortfolio = async (req: any, res: any, next: any) => {
         try {
             const errors = validationResult(req); // Finds the validation errors in this request and wraps them in an object with handy functions
 
@@ -47,14 +47,14 @@ class PortfolioService {
 
     async getPortfolios(userId: string) {
         const result = await this.db.getPortfolios(userId);
-        if(!result){
+        if (!result) {
             return null;
         }
-        else if(! result.length){
+        else if (!result.length) {
             return result;
         }
         const returnValue = [];
-        for(const portfolio of result){
+        for (const portfolio of result) {
             portfolio[this.POSITIONS] = await this.db.getPositions(userId, portfolio["id"]);
             returnValue.push(portfolio);
         }
@@ -63,7 +63,7 @@ class PortfolioService {
 
     async getPortfolioById(userId: string, portfolioId: string) {
         const result = await this.db.getPortfolioById(userId, portfolioId);
-        if(!result){
+        if (!result) {
             return null;
         }
         result[this.POSITIONS] = await this.db.getPositions(userId, result["id"]);
