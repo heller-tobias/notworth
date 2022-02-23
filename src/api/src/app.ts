@@ -29,6 +29,8 @@ router.use((req, res, next) => {
   console.log('Request Type:', req.method);
   console.log('Request Body:', req.body);
   req.body.userId = parseUserId();
+  res.header('Access-Control-Allow-Origin', 'http://localhost:4200');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
 
