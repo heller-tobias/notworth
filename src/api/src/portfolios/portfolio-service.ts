@@ -55,9 +55,8 @@ class PortfolioService {
         }
         const returnValue = [];
         for (var portfolio of result) {
-            const positions = await this.db.getPositions(userId, portfolio["id"]);
             portfolio[PayloadKey.POSITIONS] = await this.getPositionsWithValuesById(userId, portfolio["id"]);
-            portfolio[PayloadKey.TOTAL_VALUE] = 0;
+            portfolio[PayloadKey.TOTAL_VALUE] = await this.calculateTotalValue(portfolio[PayloadKey.POSITIONS]);
             returnValue.push(portfolio);
         }
         return returnValue;
@@ -68,12 +67,13 @@ class PortfolioService {
         if (!result) {
             return null;
         }
-       
+
         result[PayloadKey.POSITIONS] = await this.getPositionsWithValuesById(userId, result["id"]);
+        result[PayloadKey.TOTAL_VALUE] = await this.calculateTotalValue(result[PayloadKey.POSITIONS]);
         return result;
     }
 
-    private async getPositionsWithValuesById(userId: string, portfolioId: string){
+    private async getPositionsWithValuesById(userId: string, portfolioId: string) {
         const positions = await this.db.getPositions(userId, portfolioId);
         const returnPositions = [];
         for (const position of positions) {
@@ -81,7 +81,17 @@ class PortfolioService {
             returnPositions.push(position);
         }
         return returnPositions;
-    } 
+    }
+
+    private async calculateTotalValue(positions: any) {
+        let totalValue: number = 0
+        for (const position of positions) {
+            if (position.values.length) {
+                totalValue += position.values[0].value
+            }
+        }
+        return totalValue;
+    }
 
     async addPortfolio(userId: string, portfolio: Portfolio) {
         return this.db.addPortfolio(userId, portfolio);
