@@ -84,13 +84,44 @@ class PortfolioService {
     }
 
     private async calculateTotalValue(positions: any) {
+        let minDate: Date = new Date()
+        let maxDate: Date = this.getMaxDate();
+        let totalValueObject: Object = {};
         let totalValue: number = 0
+
         for (const position of positions) {
             if (position.values.length) {
-                totalValue += position.values[0].value
+                totalValue += position.values[0].value;
+                const currentDate: Date = new Date(position.values[0].date)
+                if (currentDate < minDate) {
+                    minDate = currentDate
+                }
+                if (currentDate > maxDate) {
+                    maxDate = currentDate
+                }
             }
         }
-        return totalValue;
+
+        totalValueObject[PayloadKey.VALUE] = totalValue
+
+        if (maxDate.getTime() === this.getMaxDate().getTime()) {
+            totalValueObject[PayloadKey.MIN_DATE] = this.toIsoDateString(new Date());
+            totalValueObject[PayloadKey.MAX_DATE] = this.toIsoDateString(new Date());
+        }
+        else {
+            totalValueObject[PayloadKey.MIN_DATE] = this.toIsoDateString(minDate)
+            totalValueObject[PayloadKey.MAX_DATE] = this.toIsoDateString(maxDate)
+        }
+
+        return totalValueObject;
+    }
+
+    private getMaxDate(): Date {
+        return new Date(-8640000000000000);
+    }
+
+    private toIsoDateString(date: Date): string{
+        return date.toISOString().substring(0, date.toISOString().indexOf('T'));
     }
 
     async addPortfolio(userId: string, portfolio: Portfolio) {
