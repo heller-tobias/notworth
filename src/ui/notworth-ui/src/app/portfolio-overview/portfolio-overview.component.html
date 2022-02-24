@@ -1,0 +1,5 @@
+<h3>Portfolio Overview</h3>
+<div *ngIf="portfolio">
+<p>{{portfolio.name}}</p>
+<app-total-current-value [currentTotalValue]="portfolio.currentTotalValue"></app-total-current-value>
+</div>

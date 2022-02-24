@@ -1,11 +1,17 @@
 <!DOCTYPE html>
 <head>
 <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
-<title>notworth</title>
+<title>NotWorth</title>
 </head>
 <body>
-  <p>Hello notworth!</p>
-  <app-not-worth-view></app-not-worth-view>
-  <button>Test button</button>
+  <nav>
+    <ul>
+      <li><strong>NotWorth</strong></li>
+    </ul>
+    <ul>
+      <li><a routerLink = "/view">View</a></li>
+      <li><a routerLink = "/edit">Edit</a></li>
+    </ul>
+  </nav>
 </body>
 <router-outlet></router-outlet>

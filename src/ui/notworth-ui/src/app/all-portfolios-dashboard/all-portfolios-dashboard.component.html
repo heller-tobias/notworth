@@ -1,0 +1,8 @@
+<h1>Portfolios</h1>
+<ul class="portfolios">
+    <li *ngFor="let portfolio of portfolios">
+        <a [routerLink]="['portfolios', portfolio.id]">
+            <span class="name">{{portfolio.name}}</span>
+        </a>
+    </li>
+</ul>

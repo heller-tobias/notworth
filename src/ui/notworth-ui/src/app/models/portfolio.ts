@@ -3,7 +3,7 @@ import { Position } from "./position";
 
 export interface Portfolio{
     id: number,
-    currentValue: CurrentTotalValue,
+    currentTotalValue: CurrentTotalValue,
     name: string,
     description: string,
     positions: Array<Position>

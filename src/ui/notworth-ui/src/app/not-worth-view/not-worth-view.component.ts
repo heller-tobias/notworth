@@ -12,14 +12,14 @@ export class NotWorthViewComponent implements OnInit {
 
   portfolios: Portfolio[] = [];
 
-  constructor(private heroService: PortfolioService, private messageService: MessageService) { }
+  constructor(private portfolioService: PortfolioService, private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.getPortfolios();
   }
  
   getPortfolios(): void{
-    this.heroService.getPortfolios()
+    this.portfolioService.getPortfolios()
         .subscribe(portfolios => this.portfolios = portfolios);
   }
 }

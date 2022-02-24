@@ -1,9 +1,1 @@
-<h2>Not Worth View</h2>
-<ul class="portfolios">
-    <li *ngFor="let portfolio of portfolios">
-        <a>
-            <span class="badge">{{portfolio.id}}</span>
-            <span class="name">{{portfolio.name}}</span>
-        </a>
-    </li>
-</ul>
+<app-all-portfolios-dashboard [portfolios]="portfolios"></app-all-portfolios-dashboard>

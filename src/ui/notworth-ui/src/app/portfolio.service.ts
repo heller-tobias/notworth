@@ -17,13 +17,21 @@ export class PortfolioService {
     private messageService: MessageService) { }
 
 
-
   /** GET Portfolios from the server */
   getPortfolios(): Observable<Portfolio[]> {
     return this.http.get<Portfolio[]>(`${this.base_url}${this.portfoliosUrl}`)
       .pipe(
         tap(_ => this.log('fetched Portfolios')),
         catchError(this.handleError<Portfolio[]>('getPortfolios', []))
+      );
+  }
+
+  /** GET Portfolio from the server */
+  getPortfolio(portfolioId: string): Observable<Portfolio> {
+    return this.http.get<Portfolio>(`${this.base_url}${this.portfoliosUrl}/${portfolioId}`)
+      .pipe(
+        tap(_ => this.log(`fetched Portfolio with id ${portfolioId}`)),
+        catchError(this.handleError<Portfolio>('getPortfolio', undefined))
       );
   }
 

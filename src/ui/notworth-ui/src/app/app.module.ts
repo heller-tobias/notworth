@@ -6,11 +6,19 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NotWorthViewComponent } from './not-worth-view/not-worth-view.component';
+import { AllPortfoliosDashboardComponent } from './all-portfolios-dashboard/all-portfolios-dashboard.component';
+import { PortfolioOverviewComponent } from './portfolio-overview/portfolio-overview.component';
+import { NotWorthEditComponent } from './not-worth-edit/not-worth-edit.component';
+import { TotalCurrentValueComponent } from './total-current-value/total-current-value.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NotWorthViewComponent
+    NotWorthViewComponent,
+    AllPortfoliosDashboardComponent,
+    PortfolioOverviewComponent,
+    NotWorthEditComponent,
+    TotalCurrentValueComponent
   ],
   imports: [
     BrowserModule,
