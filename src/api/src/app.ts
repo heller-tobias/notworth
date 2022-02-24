@@ -28,8 +28,10 @@ router.use((req, res, next) => {
   console.log('Request URL:', req.originalUrl);
   console.log('Request Type:', req.method);
   console.log('Request Body:', req.body);
+  console.log('Request Headers:', req.headers);
   req.body.userId = parseUserId();
-  res.header('Access-Control-Allow-Origin', 'http://localhost:4200');
+
+  res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
@@ -40,7 +42,7 @@ router.use((req, res, next) => {
 router.get(`/${Url.PORTFOLIOS}`, (req, res, nex) => {
   const userId: string = parseUserId();
   portfolioService.getPortfolios(userId).then((result) => {
-    res.json(result)
+     res.json(result)
   });
 });
 
