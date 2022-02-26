@@ -1,0 +1,19 @@
+<p>Create portfolio</p>
+<article>
+    <form>
+        <!-- Grid -->
+        <div class="grid">
+            <label for="name">
+                Portfolio name
+                <input [(ngModel)]="portfolio.name" type="text" id="name" name="name" placeholder="Name" required>
+            </label>
+        </div>
+
+        <label for="description">Description</label>
+        <input type="text" id="description" name="description" placeholder="Description (optional)">
+        <small>Describe what this portfolio is. (private, company...)</small>
+
+        <!-- Button -->
+        <button (click)="createPortfolio()">Create</button>
+    </form>
+</article>

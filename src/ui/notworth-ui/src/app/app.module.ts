@@ -11,6 +11,7 @@ import { PortfolioOverviewComponent } from './portfolio-overview/portfolio-overv
 import { NotWorthEditComponent } from './not-worth-edit/not-worth-edit.component';
 import { TotalCurrentValueComponent } from './total-current-value/total-current-value.component';
 import { PositionsOverviewComponent } from './positions-overview/positions-overview.component';
+import { PortfolioCreationComponent } from './portfolio-creation/portfolio-creation.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { PositionsOverviewComponent } from './positions-overview/positions-overv
     PortfolioOverviewComponent,
     NotWorthEditComponent,
     TotalCurrentValueComponent,
-    PositionsOverviewComponent
+    PositionsOverviewComponent,
+    PortfolioCreationComponent
   ],
   imports: [
     BrowserModule,

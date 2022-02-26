@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, of, tap } from 'rxjs';
 import { MessageService } from './message.service';
@@ -11,6 +11,10 @@ export class PortfolioService {
 
   private portfoliosUrl = `portfolios`;
   private base_url = `http://localhost:3000/`;
+
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
 
   constructor(
     private http: HttpClient,
@@ -33,6 +37,13 @@ export class PortfolioService {
         tap(_ => this.log(`fetched Portfolio with id ${portfolioId}`)),
         catchError(this.handleError<Portfolio>('getPortfolio', undefined))
       );
+  }
+
+  /** POST Portfolio */
+  createPortfolio(portfolio: Portfolio): Observable<string> {
+    return this.http.post<string>(`${this.base_url}${this.portfoliosUrl}`, portfolio, this.httpOptions).pipe(
+      tap((portfolioId: string) => this.log(`created portfolio w/ id=${portfolioId}`)),
+      catchError(this.handleError<string>('createPortfolio')))
   }
 
   /**
