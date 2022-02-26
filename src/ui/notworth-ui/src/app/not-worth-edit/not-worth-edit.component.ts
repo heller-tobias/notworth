@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { filter } from 'rxjs';
+import { PortfolioCreatedEvent } from '../events/portfolio-created-event';
+import { PositionCreatedEvent } from '../events/position-created-event';
 import { copy } from '../helper';
 import { MessageService } from '../message.service';
 import { DefaultPortfolio, Portfolio } from '../models/portfolio';
@@ -15,9 +18,11 @@ export class NotWorthEditComponent implements OnInit {
   portfolios: Portfolio[] = [];
   defaultPortfolio: Portfolio = copy(DefaultPortfolio);
   selectedPortfolio: Portfolio = this.defaultPortfolio;
+  portfolioToSelectId: string = this.defaultPortfolio.id;
 
   defaultPosition: Position = copy(DefaultPosition);
   selectedPosition: Position = this.defaultPosition;
+  positionToSelectId: string = this.defaultPortfolio.id;
 
   constructor(private portfolioService: PortfolioService, private messageService: MessageService) { }
 
@@ -30,6 +35,10 @@ export class NotWorthEditComponent implements OnInit {
     this.portfolioService.getPortfolios()
       .subscribe(portfolios => {
         this.portfolios = portfolios;
+        console.log("selected portfolio 1: " + this.selectedPortfolio.id + " " + this.selectedPortfolio.name);
+        this.selectPortfolio();
+        this.selectPosition();
+        console.log("selected portfolio 2: " + this.selectedPortfolio.id + " " + this.selectedPortfolio.name);
       });
   }
 
@@ -41,7 +50,39 @@ export class NotWorthEditComponent implements OnInit {
     console.log(this.selectedPosition);
   }
 
-  onPositionCreated(event: any) {
+  onPortfolioCreated(event: PortfolioCreatedEvent | any) {
+    console.log("portolio created with id: " + event.portfolioId);
+    this.portfolioToSelectId = event.portfolioId;
     this.getPortfolios();
   }
+
+  onPositionCreated(event: PositionCreatedEvent | any) {
+    console.log("portolio  with id: " + event.portfolioId +" position created with id: " + event.positionId);
+    this.portfolioToSelectId = event.portfolioId;
+    this.positionToSelectId = event.positionId;
+    this.getPortfolios();
+  }
+
+  selectPortfolio(){
+    console.log("select portfolio with id: " + this.portfolioToSelectId);
+    const filtered: Array<Portfolio> = this.portfolios.filter(portfolio => portfolio.id == this.portfolioToSelectId);
+    if(filtered.length > 0){
+      console.log("set selected portfolio: " + filtered[0]);
+      this.selectedPortfolio = filtered[0];
+    }
+  }
+
+  selectPosition(){
+    console.log("select position with id: " + this.positionToSelectId);
+    const filteredPortfolios: Array<Portfolio> = this.portfolios.filter(portfolio => portfolio.id == this.portfolioToSelectId);
+    if(filteredPortfolios.length > 0){
+      const filteredPositions: Array<Position> = filteredPortfolios[0].positions.filter(position => position.id == this.positionToSelectId);
+      if(filteredPositions.length > 0){
+        console.log("set selected position: " + filteredPositions[0]);
+        this.selectedPosition = filteredPositions[0];
+      }
+    }
+  }
+
+
 }

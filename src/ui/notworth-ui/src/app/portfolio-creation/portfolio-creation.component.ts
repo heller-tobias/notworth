@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { PortfolioCreatedEvent } from '../events/portfolio-created-event';
 import { MessageService } from '../message.service';
 import { DefaultPortfolio, Portfolio } from '../models/portfolio';
 import { PortfolioService } from '../portfolio.service';
@@ -11,17 +12,21 @@ import { PortfolioService } from '../portfolio.service';
 export class PortfolioCreationComponent implements OnInit {
 
   @Input() portfolio: Portfolio;
-  
-  constructor(private portfolioService: PortfolioService, private messageService: MessageService) { 
+  @Output() created = new EventEmitter<PortfolioCreatedEvent>();
+
+  constructor(private portfolioService: PortfolioService, private messageService: MessageService) {
     this.portfolio = DefaultPortfolio;
   }
- 
+
   ngOnInit(): void {
   }
 
-  createPortfolio(){
+  createPortfolio() {
     console.log(this.portfolio);
-    this.portfolioService.createPortfolio(this.portfolio).subscribe(portfolioId => console.log(portfolioId));
+    this.portfolioService.createPortfolio(this.portfolio).subscribe(portfolioId => {
+      console.log(portfolioId); 
+      this.created.emit({"portfolioId": portfolioId});
+    });
   }
 
 }

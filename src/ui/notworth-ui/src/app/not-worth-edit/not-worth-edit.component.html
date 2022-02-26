@@ -4,7 +4,7 @@
         <option [ngValue]="defaultPortfolio" selected>New Portfolio...</option>
         <option *ngFor="let portfolio of portfolios" [ngValue]="portfolio">{{portfolio.name}}</option>
     </select>
-<app-portfolio-creation *ngIf="selectedPortfolio.id == defaultPortfolio.id"></app-portfolio-creation>
+<app-portfolio-creation (created)="onPortfolioCreated($event)" *ngIf="selectedPortfolio.id == defaultPortfolio.id"></app-portfolio-creation>
 <div *ngIf="selectedPortfolio.id != defaultPortfolio.id">
     <strong>Position</strong>
     <select [(ngModel)]="selectedPosition" (change)="positionSelected()">

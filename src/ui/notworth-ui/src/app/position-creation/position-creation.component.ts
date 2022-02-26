@@ -14,7 +14,7 @@ export class PositionCreationComponent implements OnInit {
 
   @Input() portfolio?: Portfolio;
   @Input() position: Position;
-  @Output() created = new EventEmitter<boolean>();
+  @Output() created = new EventEmitter<Object>();
 
   categories?: Array<Category>;
 
@@ -31,7 +31,7 @@ export class PositionCreationComponent implements OnInit {
     if (this.portfolio) {
       this.portfolioService.createPosition(this.portfolio, this.position).subscribe(positionId => {
         console.log(positionId);
-        this.created.emit(true);
+        this.created.emit({"positionId":positionId, "portfolioId": this.portfolio?.id});
       });
 
     } else {
