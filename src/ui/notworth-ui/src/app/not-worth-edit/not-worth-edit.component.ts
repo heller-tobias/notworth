@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { copy } from '../helper';
 import { MessageService } from '../message.service';
-import { copyPortfolio, DefaultPortfolio, Portfolio } from '../models/portfolio';
+import { DefaultPortfolio, Portfolio } from '../models/portfolio';
+import { DefaultPosition, Position } from '../models/position';
 import { PortfolioService } from '../portfolio.service';
 
 @Component({
@@ -11,8 +13,11 @@ import { PortfolioService } from '../portfolio.service';
 export class NotWorthEditComponent implements OnInit {
   
   portfolios: Portfolio[] = [];
-  defaultPortfolio: Portfolio =  copyPortfolio(DefaultPortfolio);
-  selectedPortfolio: Portfolio = copyPortfolio(this.defaultPortfolio);
+  defaultPortfolio: Portfolio =  copy(DefaultPortfolio);
+  selectedPortfolio: Portfolio = this.defaultPortfolio;
+
+  defaultPosition: Position =  copy(DefaultPosition);
+  selectedPosition: Position = this.defaultPosition;
 
   constructor(private portfolioService: PortfolioService, private messageService: MessageService) { }
 
@@ -27,7 +32,9 @@ export class NotWorthEditComponent implements OnInit {
   
   portfolioSelected(): void{
     console.log(this.selectedPortfolio);
-    console.log(this.defaultPortfolio);
   }
 
+  positionSelected(): void{
+    console.log(this.selectedPosition);
+  }
 }

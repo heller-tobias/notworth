@@ -10,10 +10,5 @@ export interface Portfolio {
 }
 
 export const DefaultPortfolio = {
-    id: "-1", name: "New", description: "", currentTotalValue: { value: 0, minDate: new Date(-1), maxDate: new Date(-1) }, positions: []
-};
-
-export function copyPortfolio(portfolio: Portfolio)
-{
-    return JSON.parse(JSON.stringify(portfolio));
+    id: "-1", name: "", description: "", currentTotalValue: { value: 0, minDate: new Date(-1), maxDate: new Date(-1) }, positions: []
 };

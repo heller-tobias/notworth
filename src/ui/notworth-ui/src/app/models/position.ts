@@ -7,3 +7,7 @@ export interface Position{
     category: string,
     values: Array<Value>
 }
+
+export const DefaultPosition = {
+    id: "-1", name: "", description: "", category: "", values: []
+};

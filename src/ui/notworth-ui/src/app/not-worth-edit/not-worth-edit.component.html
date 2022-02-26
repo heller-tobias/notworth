@@ -6,3 +6,11 @@
     </select>
 </article>
 <app-portfolio-creation *ngIf="selectedPortfolio.id == defaultPortfolio.id"></app-portfolio-creation>
+<article>
+    <p>Position</p>
+    <select [(ngModel)]="selectedPosition" (change)="positionSelected()">
+        <option [ngValue]="defaultPosition" selected>New Position...</option>
+        <option *ngFor="let position of selectedPortfolio.positions" [ngValue]="position">{{position.name}}</option>
+    </select>
+</article>
+<app-position-creation *ngIf="selectedPosition.id == defaultPosition.id"></app-position-creation>
