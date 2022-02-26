@@ -45,6 +45,17 @@ class PortfolioService {
         }
     }
 
+    portfolioExists = async (value, userId, { req }) => {
+        if (await this.getPortfolioById(userId, req.params.portfolioId)) {
+            console.log("resolve portfolioExists");
+            return Promise.resolve();
+        }
+        else {
+            console.log("reject");
+            return Promise.reject();
+        }
+    }
+
     async getPortfolios(userId: string) {
         const result = await this.db.getPortfolios(userId);
         if (!result) {

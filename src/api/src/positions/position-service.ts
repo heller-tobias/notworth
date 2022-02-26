@@ -27,26 +27,15 @@ class PositionService {
                 return [
                     body('name', 'name doesnt exist').exists(),
                     body('description').optional().isString(),
-                    param('portfolioId', 'portfolio does not exist').exists().isString().bail().custom((value, {req}) => this.portfolioExists(value, userId, {req})),
-                    body('category', 'category does not exist').exists().bail().custom((value, { req }) => this.categoryService.getCategories(userId, req.params.portfolioId).includes(value))
+                    param('portfolioId', 'portfolio does not exist').exists().isString().bail().custom((value, {req}) => this.portfolioService.portfolioExists(value, userId, {req})),
+                    body('category', 'category does not exist').exists().bail().custom((value, { req }) => this.categoryService.doesCategoryExistForPortolio(userId, req.params.portfolioId, value))
                 ]
             };
             case 'getPosition': {
                 return [
-                    param('portfolioId', 'portfolio does not exist').exists().isString().bail().custom((value, {req}) => this.portfolioExists(value, userId, {req})),
+                    param('portfolioId', 'portfolio does not exist').exists().isString().bail().custom((value, {req}) => this.portfolioService.portfolioExists(value, userId, {req})),
                 ]
             }
-        }
-    }
-
-    portfolioExists = async (value, userId, { req }) => {
-        if (await this.portfolioService.getPortfolioById(userId, req.params.portfolioId)) {
-            console.log("resolve portfolioExists");
-            return Promise.resolve();
-        }
-        else {
-            console.log("reject");
-            return Promise.reject();
         }
     }
 

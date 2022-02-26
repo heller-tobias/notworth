@@ -14,9 +14,9 @@ app.use(bodyParser.json());
 let router = express.Router();
 
 const portfolioService = new PortfolioService(new MongoDatabase(process.env.MONGO_DB_STRING))
-const categoryService = new CategoryService(new MongoDatabase(process.env.MONGO_DB_STRING))
+const categoryService = new CategoryService(new MongoDatabase(process.env.MONGO_DB_STRING), portfolioService)
 const positionService = new PositionService(new MongoDatabase(process.env.MONGO_DB_STRING), portfolioService, categoryService);
-const valueService = new ValueService(new MongoDatabase(process.env.MONGO_DB_STRING), positionService);
+const valueService = new ValueService(new MongoDatabase(process.env.MONGO_DB_STRING), portfolioService, positionService);
 
 portfolioService.init();
 positionService.init();
@@ -109,6 +109,14 @@ router.get(`/${Url.PORTFOLIOS}/:portfolioId/${Url.POSITIONS}/:positionId/${Url.V
 router.post(`/${Url.PORTFOLIOS}/:portfolioId/${Url.POSITIONS}/:positionId/${Url.VALUES}`,
   valueService.validate('createValue', parseUserId()),
   valueService.createValue
+);
+
+/**
+ * Get all the categories of a Portfolio.
+ */
+ router.get(`/${Url.PORTFOLIOS}/:portfolioId/${Url.CATEGORIES}`,
+ categoryService.validate('getCategories', parseUserId()),
+ categoryService.getCategories
 );
 
 function parseUserId(): string {

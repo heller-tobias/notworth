@@ -1,16 +1,19 @@
 import { param } from "express-validator";
 import { NotworthDatabase } from "../db/notworth-database";
+import { PortfolioService } from "../portfolios/portfolio-service";
 import { PositionService } from "../positions/position-service";
 import { PositionValue } from "./position-value";
 const { body, validationResult } = require('express-validator/check')
 
 class ValueService {
     db: NotworthDatabase;
+    portfolioService: PortfolioService;
     positionService: PositionService;
     VALUES: string = "values";
 
-    constructor(db: NotworthDatabase, positionService: PositionService) {
+    constructor(db: NotworthDatabase, portfolioService: PortfolioService, positionService: PositionService) {
         this.db = db;
+        this.portfolioService = portfolioService;
         this.positionService = positionService;
     }
 
@@ -24,13 +27,13 @@ class ValueService {
                 return [
                     body('value', 'value doesnt exist').exists().custom(value => this.isValueNumberGreaterEqualZero(value)),
                     body('date').exists().isISO8601().isDate().custom(value => this.isDateNotInTheFuture(value)),
-                    param('portfolioId', 'portfolio does not exist').exists().isString().bail().custom((value, { req }) => this.positionService.portfolioExists(value, userId, { req })),
+                    param('portfolioId', 'portfolio does not exist').exists().isString().bail().custom((value, { req }) => this.portfolioService.portfolioExists(value, userId, { req })),
                     param('positionId', 'position does not exist').exists().isString().bail().custom((value, { req }) => this.positionService.positionExists(value, userId, { req }))
                 ]
             }
             case 'getValues': {
                 return [
-                    param('portfolioId', 'portfolio does not exist').exists().isString().bail().custom((value, { req }) => this.positionService.portfolioExists(value, userId, { req })),
+                    param('portfolioId', 'portfolio does not exist').exists().isString().bail().custom((value, { req }) => this.portfolioService.portfolioExists(value, userId, { req })),
                     param('positionId', 'position does not exist').exists().isString().bail().custom((value, { req }) => this.positionService.positionExists(value, userId, { req }))
                 ]
             }

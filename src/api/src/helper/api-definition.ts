@@ -12,6 +12,7 @@ class Url {
     public static readonly VALUES: string = "values";
     public static readonly POSITIONS: string = "positions";
     public static readonly PORTFOLIOS: string = "portfolios";
+    public static readonly CATEGORIES: string = "categories";
 }
 
 export { PayloadKey, Url }
