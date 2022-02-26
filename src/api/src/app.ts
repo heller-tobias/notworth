@@ -63,6 +63,14 @@ router.get(`/${Url.PORTFOLIOS}/:id`, (req, res, nex) => {
 });
 
 /**
+ * Create a Portfolio.
+ */
+router.post(`/${Url.PORTFOLIOS}`,
+  portfolioService.validate('createPortfolio'),
+  portfolioService.createPortfolio
+);
+
+/**
  * Get all the Positions of a Portfolio with a certain id.
  */
 router.get(`/${Url.PORTFOLIOS}/:portfolioId/${Url.POSITIONS}`,

@@ -20,7 +20,7 @@ class PortfolioService {
         switch (method) {
             case 'createPortfolio': {
                 return [
-                    body('name', 'name doesnt exist').exists(),
+                    body('name', 'name doesnt exist').exists().not().isEmpty(),
                     body('description').optional().isString(),
                 ]
             }
