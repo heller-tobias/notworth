@@ -1,12 +1,16 @@
 <p>Create portfolio</p>
 <article>
-    <form>
+    <form #myForm="ngForm" (ngSubmit)="myForm.valid && createPortfolio()" novalidate>
         <!-- Grid -->
         <div class="grid">
             <label for="name">
                 Portfolio name
-                <input [(ngModel)]="portfolio.name" type="text" id="name" name="name" placeholder="Name" required>
+                <input [(ngModel)]="portfolio.name" type="text" id="name" name="name" placeholder="Name"
+                    #portfolioName="ngModel" required>
             </label>
+        </div>
+        <div *ngIf="myForm.submitted && portfolioName.invalid">
+            <div *ngIf="portfolioName.errors?.['required']"><mark>Name is required!</mark></div>
         </div>
 
         <label for="description">Description</label>
@@ -14,6 +18,6 @@
         <small>Describe what this portfolio is. (private, company...)</small>
 
         <!-- Button -->
-        <button (click)="createPortfolio()">Create</button>
+        <button type="submit">Create</button>
     </form>
 </article>
