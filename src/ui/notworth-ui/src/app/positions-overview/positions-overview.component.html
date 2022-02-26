@@ -1,0 +1,18 @@
+<table *ngIf="positions?.length != 0" role="grid">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Category</th>
+            <th scope="col">Current Value</th>
+            <th scope="col">Last Update</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let position of positions">
+            <td>{{position.name}}</td>
+            <td>{{position.category}}</td>
+            <td>{{getCurrentValue(position.id) | currency: currency}}</td>
+            <td>{{getLastUpdate(position.id) | date}}</td>
+        </tr>
+    </tbody>
+</table>

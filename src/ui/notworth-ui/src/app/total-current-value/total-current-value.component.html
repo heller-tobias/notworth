@@ -1,4 +1,6 @@
 <div *ngIf="currentTotalValue">
-    <p>Test</p>
-    <p>{{currentTotalValue.value}} {{currency}}</p>
+    <span>{{currentTotalValue.value | currency: currency}}</span>
+    <br>
+    <small *ngIf="currentTotalValue.minDate == currentTotalValue.maxDate">{{currentTotalValue.minDate | date}} </small>
+    <small *ngIf="currentTotalValue.minDate != currentTotalValue.maxDate">{{currentTotalValue.minDate | date }} - {{currentTotalValue.maxDate | date}} </small>
 </div>
