@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MessageService } from '../message.service';
-import { Portfolio } from '../models/portfolio';
+import { DefaultPortfolio, Portfolio } from '../models/portfolio';
 import { PortfolioService } from '../portfolio.service';
 
 @Component({
@@ -13,7 +13,7 @@ export class PortfolioCreationComponent implements OnInit {
   @Input() portfolio: Portfolio;
   
   constructor(private portfolioService: PortfolioService, private messageService: MessageService) { 
-    this.portfolio = {id: "", name:"", description:"", currentTotalValue: {value: 0, minDate:new Date(), maxDate:new Date()}, positions: []};
+    this.portfolio = DefaultPortfolio;
   }
  
   ngOnInit(): void {

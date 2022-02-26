@@ -1,1 +1,8 @@
-<app-portfolio-creation></app-portfolio-creation>
+<article>
+    <p>Portfolio</p>
+    <select [(ngModel)]="selectedPortfolio" (change)="portfolioSelected()">
+        <option [ngValue]="defaultPortfolio" selected>New Portfolio...</option>
+        <option *ngFor="let portfolio of portfolios" [ngValue]="portfolio">{{portfolio.name}}</option>
+    </select>
+</article>
+<app-portfolio-creation *ngIf="selectedPortfolio.id == defaultPortfolio.id"></app-portfolio-creation>
