@@ -1,7 +1,7 @@
 <h3>Portfolio Overview</h3>
 <div *ngIf="portfolio">
-<div class="overview"><strong>{{portfolio.name}}</strong>
+<article class="overview"><strong>{{portfolio.name}}</strong>
     <app-total-current-value [currentTotalValue]="portfolio.currentTotalValue"></app-total-current-value>
-</div>
-<app-positions-overview [positions]="portfolio.positions"></app-positions-overview>
+</article>
+<article><app-positions-overview [positions]="portfolio.positions"></app-positions-overview></article>
 </div>
