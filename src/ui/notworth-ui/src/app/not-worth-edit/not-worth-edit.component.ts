@@ -11,12 +11,12 @@ import { PortfolioService } from '../portfolio.service';
   styleUrls: ['./not-worth-edit.component.scss']
 })
 export class NotWorthEditComponent implements OnInit {
-  
+
   portfolios: Portfolio[] = [];
-  defaultPortfolio: Portfolio =  copy(DefaultPortfolio);
+  defaultPortfolio: Portfolio = copy(DefaultPortfolio);
   selectedPortfolio: Portfolio = this.defaultPortfolio;
 
-  defaultPosition: Position =  copy(DefaultPosition);
+  defaultPosition: Position = copy(DefaultPosition);
   selectedPosition: Position = this.defaultPosition;
 
   constructor(private portfolioService: PortfolioService, private messageService: MessageService) { }
@@ -24,17 +24,24 @@ export class NotWorthEditComponent implements OnInit {
   ngOnInit(): void {
     this.getPortfolios();
   }
- 
-  getPortfolios(): void{
+
+  getPortfolios(): void {
+    //TODO: Set selected again
     this.portfolioService.getPortfolios()
-        .subscribe(portfolios => this.portfolios = portfolios);
+      .subscribe(portfolios => {
+        this.portfolios = portfolios;
+      });
   }
-  
-  portfolioSelected(): void{
+
+  portfolioSelected(): void {
     console.log(this.selectedPortfolio);
   }
 
-  positionSelected(): void{
+  positionSelected(): void {
     console.log(this.selectedPosition);
+  }
+
+  onPositionCreated(event: any) {
+    this.getPortfolios();
   }
 }

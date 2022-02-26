@@ -1,1 +1,26 @@
-<p>position-creation works!</p>
+<form #myForm="ngForm" (ngSubmit)="myForm.valid && createPosition()" novalidate>
+    <!-- Grid -->
+    <div class="grid">
+        <label for="name">
+            Position name
+            <input [(ngModel)]="position.name" type="text" id="name" name="name" placeholder="Name"
+                #positionName="ngModel" required>
+        </label>
+        <label for="category">
+            Position category
+            <select *ngIf="categories" [(ngModel)]="position.category" id="category" name="category" placeholder="Category"
+                #positionCategory="ngModel" required>
+            <option *ngFor="let category of categories" [ngValue]="category.name">{{category.name}}</option>
+            </select>
+        </label>
+    </div>
+    <div *ngIf="myForm.submitted && positionName.invalid">
+        <div *ngIf="positionName.errors?.['required']"><mark>Name is required!</mark></div>
+    </div>
+    <label for="description">Description</label>
+    <input type="text" id="description" name="description" placeholder="Description (optional)">
+    <small>Describe what this position is. (Maybe what stocks etc...)</small>
+
+    <!-- Button -->
+    <button type="submit">Create</button>
+</form>

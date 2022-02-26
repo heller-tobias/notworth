@@ -1,16 +1,16 @@
 <article>
-    <p>Portfolio</p>
+    <strong>Portfolio</strong>
     <select [(ngModel)]="selectedPortfolio" (change)="portfolioSelected()">
         <option [ngValue]="defaultPortfolio" selected>New Portfolio...</option>
         <option *ngFor="let portfolio of portfolios" [ngValue]="portfolio">{{portfolio.name}}</option>
     </select>
-</article>
 <app-portfolio-creation *ngIf="selectedPortfolio.id == defaultPortfolio.id"></app-portfolio-creation>
-<article>
-    <p>Position</p>
+<div *ngIf="selectedPortfolio.id != defaultPortfolio.id">
+    <strong>Position</strong>
     <select [(ngModel)]="selectedPosition" (change)="positionSelected()">
         <option [ngValue]="defaultPosition" selected>New Position...</option>
         <option *ngFor="let position of selectedPortfolio.positions" [ngValue]="position">{{position.name}}</option>
     </select>
+<app-position-creation (created)="onPositionCreated($event)" *ngIf="selectedPosition.id == defaultPosition.id" [portfolio]="selectedPortfolio"></app-position-creation>
+</div>
 </article>
-<app-position-creation *ngIf="selectedPosition.id == defaultPosition.id"></app-position-creation>

@@ -2,15 +2,19 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, of, tap } from 'rxjs';
 import { MessageService } from './message.service';
+import { Category } from './models/category';
 import { Portfolio } from './models/portfolio';
+import { Position } from './models/position';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PortfolioService {
 
-  private portfoliosUrl = `portfolios`;
-  private base_url = `http://localhost:3000/`;
+  private baseURL = `http://localhost:3000/`;
+  private portfoliosURL = `portfolios`;
+  private positionsURL = `positions`;
+  private categoriesURL = `categories`;
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -23,7 +27,7 @@ export class PortfolioService {
 
   /** GET Portfolios from the server */
   getPortfolios(): Observable<Portfolio[]> {
-    return this.http.get<Portfolio[]>(`${this.base_url}${this.portfoliosUrl}`)
+    return this.http.get<Portfolio[]>(`${this.baseURL}${this.portfoliosURL}`)
       .pipe(
         tap(_ => this.log('fetched Portfolios')),
         catchError(this.handleError<Portfolio[]>('getPortfolios', []))
@@ -32,7 +36,7 @@ export class PortfolioService {
 
   /** GET Portfolio from the server */
   getPortfolio(portfolioId: string): Observable<Portfolio> {
-    return this.http.get<Portfolio>(`${this.base_url}${this.portfoliosUrl}/${portfolioId}`)
+    return this.http.get<Portfolio>(`${this.baseURL}${this.portfoliosURL}/${portfolioId}`)
       .pipe(
         tap(_ => this.log(`fetched Portfolio with id ${portfolioId}`)),
         catchError(this.handleError<Portfolio>('getPortfolio', undefined))
@@ -41,9 +45,24 @@ export class PortfolioService {
 
   /** POST Portfolio */
   createPortfolio(portfolio: Portfolio): Observable<string> {
-    return this.http.post<string>(`${this.base_url}${this.portfoliosUrl}`, portfolio, this.httpOptions).pipe(
+    return this.http.post<string>(`${this.baseURL}${this.portfoliosURL}`, portfolio, this.httpOptions).pipe(
       tap((portfolioId: string) => this.log(`created portfolio w/ id=${portfolioId}`)),
       catchError(this.handleError<string>('createPortfolio')))
+  }
+
+  /** POST Position */
+  createPosition(portfolio: Portfolio, position: Position): Observable<string> {
+    return this.http.post<string>(`${this.baseURL}${this.portfoliosURL}/${portfolio.id}/${this.positionsURL}`, position, this.httpOptions).pipe(
+      tap((positionId: string) => this.log(`created position w/ id=${positionId}`)),
+      catchError(this.handleError<string>('createPosition')))
+  }
+
+  /** GET Categories */
+  getCategories(portfolio: Portfolio): Observable<Array<Category>> {
+    return this.http.get<Array<Category>>(`${this.baseURL}${this.portfoliosURL}/${portfolio.id}/${this.categoriesURL}`).pipe(
+      tap(categories => this.log(`fetched categories ${categories}`)),
+      catchError(this.handleError<Array<Category>>('getCategories', undefined))
+    );
   }
 
   /**
