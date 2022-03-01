@@ -2,8 +2,8 @@
     <div class="grid">
         <label for="date">
             Date
-            <input class="form-control" [(ngModel)]="value.date" type="date" id="date" name="date" placeholder="" [ngClass]="{'is-invalid': (positionDate.touched || positionDate.dirty) && !positionDate.valid }"
-                #positionDate="ngModel" appDatevalidator max="{{currentDate}}" step="1" required>
+            <input class="form-control" [(ngModel)]="value.date" type="date" id="date" name="date" placeholder=""
+                #positionDate="ngModel" [appNewDateValidator]="forbiddenDates" max="{{currentDate}}" step="1" required>
             <small>The date at which this value is recorded.</small>
         </label>
         <label for="value">
@@ -18,11 +18,13 @@
     <div *ngIf="myForm.submitted && positionDate.invalid">
         <div *ngIf="positionDate.errors?.['required']"><mark>Date is required.</mark></div>
         <div *ngIf="positionDate.errors?.['max']"><mark>Date can not be in the future.</mark></div>
-        <div *ngIf="positionDate.hasError('datevalidator')"><mark>Date can not be in the future.</mark></div>
+        <div *ngIf="positionDate.hasError('nofuturedatevalidator')"><mark>Date can not be in the future.</mark></div>
+        <div *ngIf="positionDate.hasError('newdatevalidator')"><mark>Value for this date already set.</mark></div>
     </div>
     <div *ngIf="myForm.submitted && positionValue.invalid">
         <div *ngIf="positionValue.errors?.['required']"><mark>Value is required.</mark></div>
         <div *ngIf="positionValue.errors?.['min']"><mark>Value can not be negative.</mark></div>
     </div>
+    <div></div>
     <button type="submit">Create</button>
 </form>

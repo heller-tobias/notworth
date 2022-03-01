@@ -19,12 +19,14 @@ export class ValueCreationComponent implements OnInit {
   @Output() created = new EventEmitter<Object>();
   currency: string = 'CHF';
   currentDate: string = new Date().toISOString().split("T")[0];
+  forbiddenDates: Array<Date> = [];
 
   constructor(private portfolioService: PortfolioService, private messageService: MessageService) {
     this.value = DefaultValue;
   }
 
   ngOnInit(): void {
+    this.forbiddenDates = this.getForbiddenDates();
   }
 
   createValue() {
@@ -38,6 +40,15 @@ export class ValueCreationComponent implements OnInit {
     } else {
       console.error("Unable to create Value");
     }
+  }
+
+  private getForbiddenDates(): Array<Date>{
+    if(this.position){
+      console.log("return a list");
+      return this.position?.values.map(value => value.date);
+    }
+    console.log("return empty list");
+    return [];
   }
 
 }

@@ -14,7 +14,8 @@ import { PositionsOverviewComponent } from './positions-overview/positions-overv
 import { PortfolioCreationComponent } from './portfolio-creation/portfolio-creation.component';
 import { PositionCreationComponent } from './position-creation/position-creation.component';
 import { ValueCreationComponent } from './value-creation/value-creation.component';
-import { DatevalidatorDirective } from './directives/datevalidator.directive';
+import { NoFutureDateValidatorDirective } from './directives/nofuturedatevalidator.directive';
+import { NewDateValidatorDirective } from './directives/newdatevalidator.directive';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { DatevalidatorDirective } from './directives/datevalidator.directive';
     PortfolioCreationComponent,
     PositionCreationComponent,
     ValueCreationComponent,
-    DatevalidatorDirective
+    NoFutureDateValidatorDirective,
+    NewDateValidatorDirective
   ],
   imports: [
     BrowserModule,

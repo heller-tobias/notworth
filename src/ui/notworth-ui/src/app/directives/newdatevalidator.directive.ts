@@ -1,19 +1,26 @@
-import { Directive } from '@angular/core';
+import { Directive, forwardRef, Input } from '@angular/core';
 import { Validator, NG_VALIDATORS, ValidatorFn, FormControl } from '@angular/forms';
 
 @Directive({
-    selector: '[appDatevalidator]',
+    selector: '[appNewDateValidator]',
     providers: [
         {
             provide: NG_VALIDATORS,
-            useClass: DatevalidatorDirective,
+            useExisting: forwardRef(() => NewDateValidatorDirective),
             multi: true
         }
     ]
 })
-export class DatevalidatorDirective implements Validator {
+export class NewDateValidatorDirective implements Validator {
 
     validator: ValidatorFn;
+
+    @Input('appNewDateValidator') forbiddenDates: any = [];
+    set setter (state: any) {
+        console.log("state: " + state);
+        this.forbiddenDates = state;
+    };
+
     constructor() {
         this.validator = this.dateValidator();
     }
@@ -25,16 +32,13 @@ export class DatevalidatorDirective implements Validator {
     dateValidator(): ValidatorFn {
         return (control: any) => {
             console.log(control);
+            console.log("forbiddenDates: " + this.forbiddenDates);
             if (control.value != null && control.value !== '') {
-                const maxDate = new Date();
-                maxDate.setHours(24,0,0,0);
-                console.log(control.value);
-                console.log(maxDate);
-                if(new Date(control.value) < maxDate){
+                if(! this.forbiddenDates.includes(control.value)){
                     return null;
                 }
                 else {
-                    return {datevalidator: { valid: false }};
+                    return {newdatevalidator: { valid: false }};
                 }
             } else {
                 return null;
