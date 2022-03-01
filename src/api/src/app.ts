@@ -8,15 +8,15 @@ import { ValueService } from './values/value-service';
 import { Url } from './helper/api-definition';
 require('dotenv').config()
 
-const app = express();
+const server = express();
 const port = 3000;
-app.use(bodyParser.json());
+server.use(bodyParser.json());
 let router = express.Router();
 
-const portfolioService = new PortfolioService(new MongoDatabase(process.env.MONGO_DB_STRING))
-const categoryService = new CategoryService(new MongoDatabase(process.env.MONGO_DB_STRING), portfolioService)
-const positionService = new PositionService(new MongoDatabase(process.env.MONGO_DB_STRING), portfolioService, categoryService);
-const valueService = new ValueService(new MongoDatabase(process.env.MONGO_DB_STRING), portfolioService, positionService);
+const portfolioService = new PortfolioService(new MongoDatabase(process.env.MONGO_URL))
+const categoryService = new CategoryService(new MongoDatabase(process.env.MONGO_URL), portfolioService)
+const positionService = new PositionService(new MongoDatabase(process.env.MONGO_URL), portfolioService, categoryService);
+const valueService = new ValueService(new MongoDatabase(process.env.MONGO_URL), portfolioService, positionService);
 
 portfolioService.init();
 positionService.init();
@@ -40,7 +40,7 @@ router.use((req, res, next) => {
  * Get all the Portfolios for the current user.
  */
 router.get(`/${Url.PORTFOLIOS}`, (req, res, nex) => {
-  const userId: string = parseUserId();
+  const userId = parseUserId();
   portfolioService.getPortfolios(userId).then((result) => {
      res.json(result)
   });
@@ -50,7 +50,7 @@ router.get(`/${Url.PORTFOLIOS}`, (req, res, nex) => {
  * Get a Portfolio with the passed it.
  */
 router.get(`/${Url.PORTFOLIOS}/:id`, (req, res, nex) => {
-  const userId: string = parseUserId();
+  const userId = parseUserId();
   portfolioService.getPortfolioById(userId, req.params.id).then((result) => {
     console.log(result)
     if (!result) {
@@ -123,9 +123,11 @@ function parseUserId(): string {
   return "tobias";
 }
 
-// mount the router on the app
-app.use('/', router);
+// mount the router on the server
+server.use('/', router);
 
-app.listen(port, () => {
+server.listen(port, () => {
   return console.log(`Express is listening at http://localhost:${port}`);
 });
+
+module.exports = server
