@@ -5,6 +5,7 @@ import { MessageService } from './message.service';
 import { Category } from './models/category';
 import { Portfolio } from './models/portfolio';
 import { Position } from './models/position';
+import { Value } from './models/value';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,7 @@ export class PortfolioService {
   private baseURL = `http://localhost:3000/`;
   private portfoliosURL = `portfolios`;
   private positionsURL = `positions`;
+  private valuesURL = `values`;
   private categoriesURL = `categories`;
 
   httpOptions = {
@@ -53,6 +55,13 @@ export class PortfolioService {
   /** POST Position */
   createPosition(portfolio: Portfolio, position: Position): Observable<string> {
     return this.http.post<string>(`${this.baseURL}${this.portfoliosURL}/${portfolio.id}/${this.positionsURL}`, position, this.httpOptions).pipe(
+      tap((positionId: string) => this.log(`created position w/ id=${positionId}`)),
+      catchError(this.handleError<string>('createPosition')))
+  }
+
+  /** POST Value */
+  createValue(portfolio: Portfolio, position: Position, value: Value): Observable<string> {
+    return this.http.post<string>(`${this.baseURL}${this.portfoliosURL}/${portfolio.id}/${this.positionsURL}/${position.id}/${this.valuesURL}`, position, this.httpOptions).pipe(
       tap((positionId: string) => this.log(`created position w/ id=${positionId}`)),
       catchError(this.handleError<string>('createPosition')))
   }

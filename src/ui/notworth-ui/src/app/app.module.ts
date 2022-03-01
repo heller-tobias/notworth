@@ -13,6 +13,7 @@ import { TotalCurrentValueComponent } from './total-current-value/total-current-
 import { PositionsOverviewComponent } from './positions-overview/positions-overview.component';
 import { PortfolioCreationComponent } from './portfolio-creation/portfolio-creation.component';
 import { PositionCreationComponent } from './position-creation/position-creation.component';
+import { ValueCreationComponent } from './value-creation/value-creation.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { PositionCreationComponent } from './position-creation/position-creation
     TotalCurrentValueComponent,
     PositionsOverviewComponent,
     PortfolioCreationComponent,
-    PositionCreationComponent
+    PositionCreationComponent,
+    ValueCreationComponent
   ],
   imports: [
     BrowserModule,

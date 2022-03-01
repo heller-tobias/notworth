@@ -13,4 +13,12 @@
     </select>
 <app-position-creation (created)="onPositionCreated($event)" *ngIf="selectedPosition.id == defaultPosition.id" [portfolio]="selectedPortfolio"></app-position-creation>
 </div>
+<div *ngIf="selectedPosition.id != defaultPosition.id">
+    <strong>Value</strong>
+    <select [(ngModel)]="selectedValue" (change)="positionSelected()">
+        <option [ngValue]="defaultValue" selected>New Value...</option>
+        <option *ngFor="let value of selectedPosition.values" [ngValue]="value">{{value.date}}</option>
+    </select>
+<app-value-creation (created)="onValueCreated($event)" *ngIf="selectedValue.id == defaultValue.id" [portfolio]="selectedPortfolio" [position]="selectedPosition"></app-value-creation>
+</div>
 </article>

@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { filter } from 'rxjs';
 import { PortfolioCreatedEvent } from '../events/portfolio-created-event';
 import { PositionCreatedEvent } from '../events/position-created-event';
+import { ValueCreatedEvent } from '../events/value-created-event';
 import { copy } from '../helper';
 import { MessageService } from '../message.service';
 import { DefaultPortfolio, Portfolio } from '../models/portfolio';
 import { DefaultPosition, Position } from '../models/position';
+import { DefaultValue, Value } from '../models/value';
 import { PortfolioService } from '../portfolio.service';
 
 @Component({
@@ -16,6 +18,7 @@ import { PortfolioService } from '../portfolio.service';
 export class NotWorthEditComponent implements OnInit {
 
   portfolios: Portfolio[] = [];
+
   defaultPortfolio: Portfolio = copy(DefaultPortfolio);
   selectedPortfolio: Portfolio = this.defaultPortfolio;
   portfolioToSelectId: string = this.defaultPortfolio.id;
@@ -23,6 +26,10 @@ export class NotWorthEditComponent implements OnInit {
   defaultPosition: Position = copy(DefaultPosition);
   selectedPosition: Position = this.defaultPosition;
   positionToSelectId: string = this.defaultPortfolio.id;
+
+  defaultValue: Value = copy(DefaultValue);
+  selectedValue: Value = this.defaultValue;
+  valueToSelectId: string = this.defaultValue.id;
 
   constructor(private portfolioService: PortfolioService, private messageService: MessageService) { }
 
@@ -57,32 +64,56 @@ export class NotWorthEditComponent implements OnInit {
   }
 
   onPositionCreated(event: PositionCreatedEvent | any) {
-    console.log("portolio  with id: " + event.portfolioId +" position created with id: " + event.positionId);
+    console.log("portolio  with id: " + event.portfolioId + " position created with id: " + event.positionId);
     this.portfolioToSelectId = event.portfolioId;
     this.positionToSelectId = event.positionId;
     this.getPortfolios();
   }
 
-  selectPortfolio(){
+  onValueCreated(event: ValueCreatedEvent | any) {
+    console.log("portolio  with id: " + event.portfolioId + " position  with id: " + event.positionId + " value created with id: " + event.valueId);
+    this.portfolioToSelectId = event.portfolioId;
+    this.positionToSelectId = event.positionId;
+    this.getPortfolios();
+  }
+
+  selectPortfolio() {
     console.log("select portfolio with id: " + this.portfolioToSelectId);
     const filtered: Array<Portfolio> = this.portfolios.filter(portfolio => portfolio.id == this.portfolioToSelectId);
-    if(filtered.length > 0){
+    if (filtered.length > 0) {
       console.log("set selected portfolio: " + filtered[0]);
       this.selectedPortfolio = filtered[0];
     }
   }
 
-  selectPosition(){
+  selectPosition() {
     console.log("select position with id: " + this.positionToSelectId);
     const filteredPortfolios: Array<Portfolio> = this.portfolios.filter(portfolio => portfolio.id == this.portfolioToSelectId);
-    if(filteredPortfolios.length > 0){
+    if (filteredPortfolios.length > 0) {
       const filteredPositions: Array<Position> = filteredPortfolios[0].positions.filter(position => position.id == this.positionToSelectId);
-      if(filteredPositions.length > 0){
+      if (filteredPositions.length > 0) {
         console.log("set selected position: " + filteredPositions[0]);
         this.selectedPosition = filteredPositions[0];
       }
     }
   }
 
+  selectValue() {
+    console.log("select value with id: " + this.valueToSelectId);
+    const filteredPortfolios: Array<Portfolio> = this.portfolios.filter(portfolio => portfolio.id == this.portfolioToSelectId);
+    if (filteredPortfolios.length > 0) {
+      const filteredPositions: Array<Position> = filteredPortfolios[0].positions.filter(position => position.id == this.positionToSelectId);
+      if (filteredPositions.length > 0) {
+        const filteredValues: Array<Value> = filteredPositions[0].values.filter(value => value.id == this.valueToSelectId);
+        if (filteredValues.length > 0) {
+          console.log("set selected value: " + filteredValues[0]);
+          this.selectedValue = filteredValues[0];
+        }
+      }
+    }
+  }
+
 
 }
+
+
