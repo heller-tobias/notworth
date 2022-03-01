@@ -17,6 +17,8 @@ export class ValueCreationComponent implements OnInit {
   @Input() position?: Position;
   @Input() value: Value;
   @Output() created = new EventEmitter<Object>();
+  currency: string = 'CHF';
+  currentDate: string = new Date().toISOString().split("T")[0];
 
   constructor(private portfolioService: PortfolioService, private messageService: MessageService) {
     this.value = DefaultValue;

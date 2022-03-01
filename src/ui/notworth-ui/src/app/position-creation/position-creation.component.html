@@ -3,7 +3,7 @@
     <div class="grid">
         <label for="name">
             Position name
-            <input [(ngModel)]="position.name" type="text" id="name" name="name" placeholder="Name"
+            <input [(ngModel)]="position.name" type="text" id="name" name="name" placeholder="Name" minlength="1"
                 #positionName="ngModel" required>
         </label>
         <label for="category">
@@ -16,6 +16,11 @@
     </div>
     <div *ngIf="myForm.submitted && positionName.invalid">
         <div *ngIf="positionName.errors?.['required']"><mark>Name is required!</mark></div>
+    </div>
+    <div *ngIf="myForm.submitted && positionName.invalid">
+        <div *ngIf="positionName.errors?.['minlength']">
+            <mark>Name must be at least 1 character long.</mark>
+        </div>
     </div>
     <label for="description">Description</label>
     <input type="text" id="description" name="description" placeholder="Description (optional)">

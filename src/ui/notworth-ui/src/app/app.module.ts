@@ -14,6 +14,7 @@ import { PositionsOverviewComponent } from './positions-overview/positions-overv
 import { PortfolioCreationComponent } from './portfolio-creation/portfolio-creation.component';
 import { PositionCreationComponent } from './position-creation/position-creation.component';
 import { ValueCreationComponent } from './value-creation/value-creation.component';
+import { DatevalidatorDirective } from './directives/datevalidator.directive';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { ValueCreationComponent } from './value-creation/value-creation.componen
     PositionsOverviewComponent,
     PortfolioCreationComponent,
     PositionCreationComponent,
-    ValueCreationComponent
+    ValueCreationComponent,
+    DatevalidatorDirective
   ],
   imports: [
     BrowserModule,

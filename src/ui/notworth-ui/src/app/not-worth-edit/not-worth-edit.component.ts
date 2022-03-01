@@ -45,6 +45,7 @@ export class NotWorthEditComponent implements OnInit {
         console.log("selected portfolio 1: " + this.selectedPortfolio.id + " " + this.selectedPortfolio.name);
         this.selectPortfolio();
         this.selectPosition();
+        this.selectValue();
         console.log("selected portfolio 2: " + this.selectedPortfolio.id + " " + this.selectedPortfolio.name);
       });
   }
@@ -74,6 +75,7 @@ export class NotWorthEditComponent implements OnInit {
     console.log("portolio  with id: " + event.portfolioId + " position  with id: " + event.positionId + " value created with id: " + event.valueId);
     this.portfolioToSelectId = event.portfolioId;
     this.positionToSelectId = event.positionId;
+    this.valueToSelectId = event.valueId;
     this.getPortfolios();
   }
 

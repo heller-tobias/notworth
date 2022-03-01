@@ -3,14 +3,18 @@
     <div class="grid">
         <label for="name">
             Portfolio name
-            <input [(ngModel)]="portfolio.name" type="text" id="name" name="name" placeholder="Name"
+            <input [(ngModel)]="portfolio.name" type="text" id="name" name="name" placeholder="Name" minlength="1"
                 #portfolioName="ngModel" required>
         </label>
     </div>
     <div *ngIf="myForm.submitted && portfolioName.invalid">
-        <div *ngIf="portfolioName.errors?.['required']"><mark>Name is required!</mark></div>
+        <div *ngIf="portfolioName.errors?.['required']"><mark>Name is required.</mark></div>
     </div>
-
+    <div *ngIf="myForm.submitted && portfolioName.invalid">
+        <div *ngIf="portfolioName.errors?.['minlength']">
+            <mark>Name must be at least 1 character long.</mark>
+        </div>
+    </div>
     <label for="description">Description</label>
     <input type="text" id="description" name="description" placeholder="Description (optional)">
     <small>Describe what this portfolio is. (private, company...)</small>

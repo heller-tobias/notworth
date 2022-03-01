@@ -61,7 +61,7 @@ export class PortfolioService {
 
   /** POST Value */
   createValue(portfolio: Portfolio, position: Position, value: Value): Observable<string> {
-    return this.http.post<string>(`${this.baseURL}${this.portfoliosURL}/${portfolio.id}/${this.positionsURL}/${position.id}/${this.valuesURL}`, position, this.httpOptions).pipe(
+    return this.http.post<string>(`${this.baseURL}${this.portfoliosURL}/${portfolio.id}/${this.positionsURL}/${position.id}/${this.valuesURL}`, value, this.httpOptions).pipe(
       tap((positionId: string) => this.log(`created position w/ id=${positionId}`)),
       catchError(this.handleError<string>('createPosition')))
   }
