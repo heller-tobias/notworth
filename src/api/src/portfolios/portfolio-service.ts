@@ -4,12 +4,15 @@ import { Portfolio } from "./portfolio";
 const { body, validationResult } = require('express-validator/check')
 import { CategoryService } from "../categories/category-service";
 import { PayloadKey } from "../helper/api-definition";
+import { HistoricPortfolioService } from "./historic-portfolio-service";
 
 class PortfolioService {
     db: NotworthDatabase;
+    historicPortfolioService: HistoricPortfolioService;
 
     constructor(db: NotworthDatabase) {
         this.db = db;
+        this.historicPortfolioService = new HistoricPortfolioService();
     }
 
     async init() {
@@ -67,7 +70,8 @@ class PortfolioService {
         const returnValue = [];
         for (var portfolio of result) {
             portfolio[PayloadKey.POSITIONS] = await this.getPositionsWithValuesById(userId, portfolio["id"]);
-            portfolio[PayloadKey.TOTAL_VALUE] = await this.calculateTotalValue(portfolio[PayloadKey.POSITIONS]);
+            portfolio[PayloadKey.CURRENT_VALUE] = await this.calculateTotalValue(portfolio[PayloadKey.POSITIONS]);
+            portfolio[PayloadKey.HISTORIC_VALUE] = await this.historicPortfolioService.calculateHistoricValue(portfolio[PayloadKey.POSITIONS]);
             returnValue.push(portfolio);
         }
         return returnValue;
@@ -80,7 +84,9 @@ class PortfolioService {
         }
 
         result[PayloadKey.POSITIONS] = await this.getPositionsWithValuesById(userId, result["id"]);
-        result[PayloadKey.TOTAL_VALUE] = await this.calculateTotalValue(result[PayloadKey.POSITIONS]);
+        result[PayloadKey.CURRENT_VALUE] = await this.calculateTotalValue(result[PayloadKey.POSITIONS]);
+        result[PayloadKey.HISTORIC_VALUE] = await this.historicPortfolioService.calculateHistoricValue(result[PayloadKey.POSITIONS]);
+
         return result;
     }
 

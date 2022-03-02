@@ -5,6 +5,8 @@ const {MongoClient} = require('mongodb');
 let connection;
 let db;
 let portfolios;
+let positions;
+let values;
 
 beforeAll(async () => {
   connection = await MongoClient.connect(global.__MONGO_URI__, {
@@ -13,6 +15,8 @@ beforeAll(async () => {
   });
   db = await connection.db('notworth');
   portfolios = db.collection('portfolios');
+  positions = db.collection('positions');
+  values = db.collection('values');
 });
 
 describe('GET /portfolios', () => {
@@ -25,13 +29,43 @@ describe('GET /portfolios', () => {
     it('responds with one portfolio', async () => {
         const mockPortfolio = {id:"1", name: 'myPortfolio', description: "This is my wonderful portfolio.", userId: "tobias"};
         await portfolios.insertOne(mockPortfolio);
-        console.log(await portfolios.find());
 
         const response = await request(app).get('/portfolios').expect(200);
         expect(response.body).toBeDefined();
         expect(response.body[0].name).toBe(mockPortfolio.name);
         return response;
     });
+
+    it('respond with total current value', async () => {
+      const mockPortfolio = {id:"4", name: 'myTotalCurrentValue', description: "This is my wonderful cool portfolio.", userId: "tobias"};
+      await portfolios.insertOne(mockPortfolio);
+      const mockPosition1 = {id:"1", portfolioId: "4", name: 'LUKB', category:"savings", userId: "tobias"};
+      const mockPosition2 = {id:"2", portfolioId: "4", name: 'Swissquote', category:"investing", userId: "tobias"};
+
+      await positions.insertOne(mockPosition1);
+      await positions.insertOne(mockPosition2);
+
+      const mockValue11 = {id:"11", portfolioId: "4", positionId: "1", value: 50, date: "2022-02-01", userId: "tobias"};
+      const mockValue12 = {id:"12", portfolioId: "4", positionId: "1", value: 100, date: "2022-02-15", userId: "tobias"};
+      const mockValue21 = {id:"21", portfolioId: "4", positionId: "2", value: 50, date: "2022-02-04", userId: "tobias"};
+      const mockValue22 = {id:"22", portfolioId: "4", positionId: "2", value: 200, date: "2022-02-17", userId: "tobias"};
+      
+      await values.insertOne(mockValue11);
+      await values.insertOne(mockValue12);
+      await values.insertOne(mockValue21);
+      await values.insertOne(mockValue22);
+
+      const response = await request(app).get('/portfolios/4').expect(200);
+      expect(response.body).toBeDefined();
+      console.log(response.body);
+      const newestHistoricValue = response.body.historicTotalValue[0];
+      expect(newestHistoricValue.date).toBe(new Date().toISOString().split('T')[0]);
+      expect(newestHistoricValue.totalValue).toBe(300);
+      const oldestHistoricValue = response.body.historicTotalValue[response.body.historicTotalValue.length -1];
+      expect(oldestHistoricValue.date).toBe("2022-02-01");
+      expect(oldestHistoricValue.totalValue).toBe(50);
+      return response;
+  });
 });
 
 describe('GET /portfolios', () => {

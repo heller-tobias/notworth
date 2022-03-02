@@ -4,7 +4,10 @@ class PayloadKey {
     public static readonly MIN_DATE: string = "minDate";
     public static readonly MAX_DATE: string = "maxDate";
     public static readonly POSITIONS: string = "positions";
-    public static readonly TOTAL_VALUE: string = "currentTotalValue";
+    public static readonly CURRENT_VALUE: string = "currentTotalValue";
+    public static readonly HISTORIC_VALUE: string = "historicTotalValue";
+    public static readonly TOTAL_VALUE: string = "totalValue";
+    public static readonly DATE: string = "date";
 }
 
 
