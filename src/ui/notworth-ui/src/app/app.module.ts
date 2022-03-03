@@ -17,6 +17,7 @@ import { ValueCreationComponent } from './value-creation/value-creation.componen
 import { NoFutureDateValidatorDirective } from './directives/nofuturedatevalidator.directive';
 import { NewDateValidatorDirective } from './directives/newdatevalidator.directive';
 import { PositionOverviewComponent } from './position-overview/position-overview.component';
+import { NgxChartsModule }from '@swimlane/ngx-charts';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { PositionOverviewComponent } from './position-overview/position-overview
     FormsModule,
     AppRoutingModule,
     HttpClientModule,
+    NgxChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

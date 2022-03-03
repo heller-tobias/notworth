@@ -12,17 +12,36 @@ import { PortfolioService } from '../portfolio.service';
 export class PortfolioOverviewComponent implements OnInit {
 
   @Input() portfolio?: Portfolio;
+  chartData?: Array<any>;
   constructor(private route: ActivatedRoute, private portfolioService: PortfolioService, private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.getPortfolio();
+    
   }
 
   getPortfolio(): void {
     const id = this.route.snapshot.paramMap.get('id')
     if (id) {
       this.portfolioService.getPortfolio(id)
-        .subscribe(portfolio => this.portfolio = portfolio);
+        .subscribe(portfolio => {this.portfolio = portfolio; this.getChartData()});
     }
   }
+
+  private getChartData(): void{
+    this.chartData = [{"name": "Total Value", "series": [{"name": "2022-01-03", "value": 70000}, {"name": "2022-01-04", "value": 12000}]}]
+    this.chartData = [];
+    let totalValue: any = {"name": "Total Value"};
+    const totalValueSeries = [];
+    if(this.portfolio?.historicTotalValue){
+      for(const historicValue of this.portfolio?.historicTotalValue){
+        totalValueSeries.push({"name": historicValue.date, "value": historicValue.totalValue})
+      }
+      totalValue.series = totalValueSeries;
+    }
+
+    this.chartData.push(totalValue);
+    console.log(this.chartData)
+  }
+
 }

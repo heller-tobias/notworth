@@ -3,5 +3,10 @@
 <article class="overview"><strong>{{portfolio.name}}</strong>
     <app-total-current-value [currentTotalValue]="portfolio.currentTotalValue"></app-total-current-value>
 </article>
+<article>
+    <ngx-charts-line-chart [results] = "chartData">
+
+    </ngx-charts-line-chart>
+</article>
 <article><app-positions-overview [positions]="portfolio.positions"></app-positions-overview></article>
 </div>
