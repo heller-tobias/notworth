@@ -52,6 +52,15 @@ export class PortfolioService {
       catchError(this.handleError<string>('createPortfolio')))
   }
 
+  /** GET Position from the server */
+  getPosition(portfolioId: string, positionId: string, ): Observable<Position> {
+    return this.http.get<Position>(`${this.baseURL}${this.portfoliosURL}/${portfolioId}/${this.positionsURL}/${positionId}`)
+      .pipe(
+        tap(_ => this.log(`fetched Position with id ${positionId}`)),
+        catchError(this.handleError<Position>('getPosition', undefined))
+      );
+  }
+
   /** POST Position */
   createPosition(portfolio: Portfolio, position: Position): Observable<string> {
     return this.http.post<string>(`${this.baseURL}${this.portfoliosURL}/${portfolio.id}/${this.positionsURL}`, position, this.httpOptions).pipe(

@@ -8,7 +8,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let position of positions">
+        <tr *ngFor="let position of positions" [routerLink]="['positions', position.id]">
             <td>{{position.name}}</td>
             <td>{{position.category}}</td>
             <td>{{getCurrentValue(position.id) | currency: currency}}</td>

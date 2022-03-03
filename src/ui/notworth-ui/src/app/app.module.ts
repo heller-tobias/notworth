@@ -16,6 +16,7 @@ import { PositionCreationComponent } from './position-creation/position-creation
 import { ValueCreationComponent } from './value-creation/value-creation.component';
 import { NoFutureDateValidatorDirective } from './directives/nofuturedatevalidator.directive';
 import { NewDateValidatorDirective } from './directives/newdatevalidator.directive';
+import { PositionOverviewComponent } from './position-overview/position-overview.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { NewDateValidatorDirective } from './directives/newdatevalidator.directi
     PositionCreationComponent,
     ValueCreationComponent,
     NoFutureDateValidatorDirective,
-    NewDateValidatorDirective
+    NewDateValidatorDirective,
+    PositionOverviewComponent
   ],
   imports: [
     BrowserModule,

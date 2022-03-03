@@ -1,0 +1,23 @@
+<article class="overview">
+    <div>
+        <strong>{{position?.name}}</strong>
+        <p>{{position?.category}}</p>
+    </div>
+    <app-total-current-value [currentTotalValue]="currentTotalValue"></app-total-current-value>
+</article>
+<article>
+    <table *ngIf="position?.values?.length != 0" role="grid">
+        <thead>
+            <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let value of position?.values">
+                <td>{{value.date | date}}</td>
+                <td>{{value.value | currency: currency}}</td>
+            </tr>
+        </tbody>
+    </table>
+</article>
