@@ -1,10 +1,17 @@
 <h1>Portfolios</h1>
 <article>
-    <ul class="portfolios">
-        <li *ngFor="let portfolio of portfolios">
-            <a [routerLink]="['portfolios', portfolio.id]">
-                <span class="name">{{portfolio.name}}</span>
-            </a>
-        </li>
-    </ul>
+    <table role="grid">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Current Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let portfolio of portfolios" [routerLink]="['portfolios', portfolio.id]">
+                <td><a>{{portfolio.name}}</a></td>
+                <td>{{portfolio.currentTotalValue.value | currency: currency}}</td>
+            </tr>
+        </tbody>
+    </table>
 </article>

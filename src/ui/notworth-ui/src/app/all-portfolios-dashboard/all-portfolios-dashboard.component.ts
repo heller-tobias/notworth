@@ -8,6 +8,7 @@ import { Portfolio } from '../models/portfolio';
 })
 export class AllPortfoliosDashboardComponent implements OnInit {
   @Input() portfolios?: Array<Portfolio>;
+  currency: string = "CHF";
   
   constructor() { 
     
