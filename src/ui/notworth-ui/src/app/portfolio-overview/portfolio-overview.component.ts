@@ -43,10 +43,9 @@ export class PortfolioOverviewComponent implements OnInit {
     }
 
     this.chartData.push(totalValue);
-    console.log(this.chartData)
   }
 
-  getColors(){
+  private getColors(){
     return [
       {"name": "Total Value","value": "#457B9D"},
       {"name": "b","value": "#ff0000"}
