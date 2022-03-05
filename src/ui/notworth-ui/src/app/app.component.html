@@ -6,17 +6,21 @@
 </head>
 
 <body>
-  <nav>
-    <ul>
-      <li><strong>NotWorth</strong></li>
-    </ul>
-    <ul>
-      <li><a routerLink="/view">View</a></li>
-      <li><a routerLink="/edit">Edit</a></li>
-    </ul>
-  </nav>
-  <router-outlet></router-outlet>
-  <article>
-    (C) Tobias Heller 2022
-  </article>
+  <header class="container">
+    <nav>
+      <ul>
+        <li><strong>NotWorth</strong></li>
+      </ul>
+      <ul>
+        <li><a routerLink="/view">View</a></li>
+        <li><a routerLink="/edit">Edit</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main class="container">
+    <router-outlet></router-outlet>
+    <article>
+      (C) Tobias Heller 2022
+    </article>
+  </main>
 </body>

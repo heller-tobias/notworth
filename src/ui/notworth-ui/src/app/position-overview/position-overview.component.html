@@ -5,8 +5,8 @@
     </div>
     <app-total-current-value [currentTotalValue]="currentTotalValue"></app-total-current-value>
 </article>
-<article>
-    <table *ngIf="position?.values?.length != 0" role="grid">
+<article *ngIf="position?.values?.length != 0">
+    <table role="grid">
         <thead>
             <tr>
                 <th scope="col">Date</th>

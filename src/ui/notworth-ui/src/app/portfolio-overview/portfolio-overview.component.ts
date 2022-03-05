@@ -13,11 +13,14 @@ export class PortfolioOverviewComponent implements OnInit {
 
   @Input() portfolio?: Portfolio;
   chartData?: Array<any>;
-  constructor(private route: ActivatedRoute, private portfolioService: PortfolioService, private messageService: MessageService) { }
+  colors: Array<any>;
+
+  constructor(private route: ActivatedRoute, private portfolioService: PortfolioService, private messageService: MessageService) { 
+    this.colors = this.getColors();
+  }
 
   ngOnInit(): void {
     this.getPortfolio();
-    
   }
 
   getPortfolio(): void {
@@ -29,19 +32,25 @@ export class PortfolioOverviewComponent implements OnInit {
   }
 
   private getChartData(): void{
-    this.chartData = [{"name": "Total Value", "series": [{"name": "2022-01-03", "value": 70000}, {"name": "2022-01-04", "value": 12000}]}]
     this.chartData = [];
     let totalValue: any = {"name": "Total Value"};
     const totalValueSeries = [];
     if(this.portfolio?.historicTotalValue){
       for(const historicValue of this.portfolio?.historicTotalValue){
-        totalValueSeries.push({"name": historicValue.date, "value": historicValue.totalValue})
+        totalValueSeries.push({"name":new Date(historicValue.date), "value": historicValue.totalValue})
       }
-      totalValue.series = totalValueSeries;
+      totalValue.series = totalValueSeries.reverse();
     }
 
     this.chartData.push(totalValue);
     console.log(this.chartData)
+  }
+
+  getColors(){
+    return [
+      {"name": "Total Value","value": "#457B9D"},
+      {"name": "b","value": "#ff0000"}
+    ] 
   }
 
 }
