@@ -8,6 +8,7 @@ import { ValueService } from './values/value-service';
 import { Url } from './helper/api-definition';
 require('dotenv').config()
 
+const path = require('path')
 const server = express();
 const port = 3000;
 server.use(bodyParser.json());
@@ -125,6 +126,7 @@ function parseUserId(): string {
 
 // mount the router on the server
 server.use('/', router);
+server.use('/static', express.static(path.join(__dirname, 'public')))
 
 server.listen(port, () => {
   return console.log(`Express is listening at http://localhost:${port}`);
