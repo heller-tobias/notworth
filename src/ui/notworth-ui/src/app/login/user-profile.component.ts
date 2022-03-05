@@ -3,11 +3,7 @@ import { AuthService } from '@auth0/auth0-angular';
 
 @Component({
   selector: 'app-user-profile',
-  template: `
-    <ul *ngIf="auth.user$ | async as user">
-      <li>{{ user.name }}</li>
-      <li>{{ user.email }}</li>
-    </ul>`
+  templateUrl: './user-profile.component.html'
 })
 export class UserProfileComponent {
   constructor(public auth: AuthService) {}

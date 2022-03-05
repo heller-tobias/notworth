@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,10 +20,10 @@ import { PositionOverviewComponent } from './position-overview/position-overview
 import { NgxChartsModule }from '@swimlane/ngx-charts';
 import { ValueLineGraphComponent } from './value-line-graph/value-line-graph.component';
 import { AuthModule } from '@auth0/auth0-angular';
-import { AuthButtonComponent } from './login/auth-button';
-import { UserProfileComponent } from './login/user-profile';
+import { AuthButtonComponent } from './login/auth-button.component';
+import { UserProfileComponent } from './login/user-profile.component';
 import { WelcomeComponent } from './welcome/welcome.component';
-
+import { AuthHttpInterceptor } from '@auth0/auth0-angular';
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,11 +51,37 @@ import { WelcomeComponent } from './welcome/welcome.component';
     HttpClientModule,
     NgxChartsModule,
     AuthModule.forRoot({
+      // The domain and clientId were configured in the previous chapter
       domain: 'dev-3p-kd7td.eu.auth0.com',
-      clientId: 'TBHl2nfn0FG9VSoA1sBJemgYc4IAGuMU'
-    }),
+      clientId: 'TBHl2nfn0FG9VSoA1sBJemgYc4IAGuMU',
+    
+      // Request this audience at user authentication time
+      audience: 'https://dev-3p-kd7td.eu.auth0.com/api/v2/',
+    
+      // Request this scope at user authentication time
+      scope: 'read:current_user',
+    
+      // Specify configuration for the interceptor              
+      httpInterceptor: {
+        allowedList: [
+          {
+            // Match any request that starts 'https://dev-3p-kd7td.eu.auth0.com/api/v2/' (note the asterisk)
+            uri: 'https://dev-3p-kd7td.eu.auth0.com/api/v2/*',
+            tokenOptions: {
+              // The attached token should target this audience
+              audience: 'https://dev-3p-kd7td.eu.auth0.com/api/v2/',
+    
+              // The attached token should have these scopes
+              scope: 'read:current_user'
+            }
+          }
+        ]
+      }
+    })
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthHttpInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

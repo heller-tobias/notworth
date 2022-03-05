@@ -1,0 +1,9 @@
+
+<div *ngIf="auth.user$ | async as user">
+<h1>Hi {{ user.name }}!</h1>
+<article>
+  
+    <strong>{{ user.name }}</strong>
+    <p>{{ user.email }}</p>
+</article>
+</div>
