@@ -21,19 +21,19 @@ class PositionService {
         this.db.init();
     }
 
-    validate(method, userId) {
+    validate(method) {
         switch (method) {
             case 'createPosition': {
                 return [
                     body('name', 'name doesnt exist').exists(),
                     body('description').optional().isString(),
-                    param('portfolioId', 'portfolio does not exist').exists().isString().bail().custom((value, {req}) => this.portfolioService.portfolioExists(value, userId, {req})),
-                    body('category', 'category does not exist').exists().bail().custom((value, { req }) => this.categoryService.doesCategoryExistForPortolio(userId, req.params.portfolioId, value))
+                    param('portfolioId', 'portfolio does not exist').exists().isString().bail().custom((value, {req}) => this.portfolioService.portfolioExists(value, req.body.userId, {req})),
+                    body('category', 'category does not exist').exists().bail().custom((value, { req }) => this.categoryService.doesCategoryExistForPortolio(req.body.userId, req.params.portfolioId, value))
                 ]
             };
             case 'getPosition': {
                 return [
-                    param('portfolioId', 'portfolio does not exist').exists().isString().bail().custom((value, {req}) => this.portfolioService.portfolioExists(value, userId, {req})),
+                    param('portfolioId', 'portfolio does not exist').exists().isString().bail().custom((value, {req}) => this.portfolioService.portfolioExists(value, req.body.userId, {req})),
                 ]
             }
         }

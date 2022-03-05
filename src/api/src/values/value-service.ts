@@ -21,20 +21,20 @@ class ValueService {
         this.db.init();
     }
 
-    validate(method, userId) {
+    validate(method) {
         switch (method) {
             case 'createValue': {
                 return [
                     body('value', 'value doesnt exist').exists().custom(value => this.isValueNumberGreaterEqualZero(value)),
                     body('date').exists().isISO8601().isDate().custom(value => this.isDateNotInTheFuture(value)),
-                    param('portfolioId', 'portfolio does not exist').exists().isString().bail().custom((value, { req }) => this.portfolioService.portfolioExists(value, userId, { req })),
-                    param('positionId', 'position does not exist').exists().isString().bail().custom((value, { req }) => this.positionService.positionExists(value, userId, { req }))
+                    param('portfolioId', 'portfolio does not exist').exists().isString().bail().custom((value, { req }) => this.portfolioService.portfolioExists(value, req.body.userId, { req })),
+                    param('positionId', 'position does not exist').exists().isString().bail().custom((value, { req }) => this.positionService.positionExists(value, req.body.userId, { req }))
                 ]
             }
             case 'getValues': {
                 return [
-                    param('portfolioId', 'portfolio does not exist').exists().isString().bail().custom((value, { req }) => this.portfolioService.portfolioExists(value, userId, { req })),
-                    param('positionId', 'position does not exist').exists().isString().bail().custom((value, { req }) => this.positionService.positionExists(value, userId, { req }))
+                    param('portfolioId', 'portfolio does not exist').exists().isString().bail().custom((value, { req }) => this.portfolioService.portfolioExists(value, req.body.userId, { req })),
+                    param('positionId', 'position does not exist').exists().isString().bail().custom((value, { req }) => this.positionService.positionExists(value, req.body.userId, { req }))
                 ]
             }
         }

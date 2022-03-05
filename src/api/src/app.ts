@@ -9,6 +9,7 @@ import { Url } from './helper/api-definition';
 const { auth } = require('express-oauth2-jwt-bearer');
 const { requiredScopes } = require('express-oauth2-jwt-bearer');
 const checkScopes = requiredScopes('read:user');
+const jwt = require('jsonwebtoken');
 
 require('dotenv').config()
 
@@ -33,13 +34,21 @@ const checkJwt = auth({
   issuerBaseURL: `https://dev-3p-kd7td.eu.auth0.com/`,
 });
 
+function setUser(req, res, next) {
+  const authHeader = req.headers['authorization']
+  const token = authHeader && authHeader.split(' ')[1]
+  const decoded = jwt.decode(token);
+  req.body.userId = decoded.sub;
+  next();
+}
+
+
 router.use((req, res, next) => {
   console.log('Time:', Date.now());
   console.log('Request URL:', req.originalUrl);
   console.log('Request Type:', req.method);
   console.log('Request Body:', req.body);
   console.log('Request Headers:', req.headers);
-  req.body.userId = parseUserId();
 
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
@@ -50,8 +59,9 @@ router.use((req, res, next) => {
 /**
  * Get all the Portfolios for the current user.
  */
-router.get(`/${Url.PORTFOLIOS}`, checkJwt, checkScopes, (req, res, nex) => {
-  const userId = parseUserId();
+router.get(`/${Url.PORTFOLIOS}`, checkJwt, checkScopes, setUser, (req, res, nex) => {
+  const userId = parseUserId(req);
+  console.log(userId);
   portfolioService.getPortfolios(userId).then((result) => {
     res.json(result)
   });
@@ -60,8 +70,9 @@ router.get(`/${Url.PORTFOLIOS}`, checkJwt, checkScopes, (req, res, nex) => {
 /**
  * Get a Portfolio with the passed it.
  */
-router.get(`/${Url.PORTFOLIOS}/:id`, checkJwt, checkScopes, (req, res, nex) => {
-  const userId = parseUserId();
+router.get(`/${Url.PORTFOLIOS}/:id`, checkJwt, checkScopes, setUser, (req, res, nex) => {
+  const userId = parseUserId(req);
+  console.log(userId);
   portfolioService.getPortfolioById(userId, req.params.id).then((result) => {
     console.log(result)
     if (!result) {
@@ -76,7 +87,7 @@ router.get(`/${Url.PORTFOLIOS}/:id`, checkJwt, checkScopes, (req, res, nex) => {
 /**
  * Create a Portfolio.
  */
-router.post(`/${Url.PORTFOLIOS}`, checkJwt, checkScopes,
+router.post(`/${Url.PORTFOLIOS}`, checkJwt, checkScopes, setUser,
   portfolioService.validate('createPortfolio'),
   portfolioService.createPortfolio
 );
@@ -84,24 +95,24 @@ router.post(`/${Url.PORTFOLIOS}`, checkJwt, checkScopes,
 /**
  * Get all the Positions of a Portfolio with a certain id.
  */
-router.get(`/${Url.PORTFOLIOS}/:portfolioId/${Url.POSITIONS}`, checkJwt, checkScopes,
-  positionService.validate('getPosition', parseUserId()),
+router.get(`/${Url.PORTFOLIOS}/:portfolioId/${Url.POSITIONS}`, checkJwt, checkScopes, setUser,
+  positionService.validate('getPosition'),
   positionService.getPositions
 );
 
 /**
  * Get a Position of a Portfolio with a certain id.
  */
-router.get(`/${Url.PORTFOLIOS}/:portfolioId/${Url.POSITIONS}/:id`, checkJwt, checkScopes,
-  positionService.validate('getPosition', parseUserId()),
+router.get(`/${Url.PORTFOLIOS}/:portfolioId/${Url.POSITIONS}/:id`, checkJwt, checkScopes, setUser,
+  positionService.validate('getPosition'),
   positionService.getPositionById
 );
 
 /**
  * Create a new position for the specified Portfolio.
  */
-router.post(`/${Url.PORTFOLIOS}/:portfolioId/${Url.POSITIONS}`, checkJwt, checkScopes,
-  positionService.validate('createPosition', parseUserId()),
+router.post(`/${Url.PORTFOLIOS}/:portfolioId/${Url.POSITIONS}`, checkJwt, checkScopes, setUser,
+  positionService.validate('createPosition'),
   positionService.createPosition
 );
 
@@ -109,29 +120,29 @@ router.post(`/${Url.PORTFOLIOS}/:portfolioId/${Url.POSITIONS}`, checkJwt, checkS
 /**
  * Get all the Values of a Portfolio Position.
  */
-router.get(`/${Url.PORTFOLIOS}/:portfolioId/${Url.POSITIONS}/:positionId/${Url.VALUES}`, checkJwt, checkScopes,
-  valueService.validate('getValues', parseUserId()),
+router.get(`/${Url.PORTFOLIOS}/:portfolioId/${Url.POSITIONS}/:positionId/${Url.VALUES}`, checkJwt, checkScopes, setUser,
+  valueService.validate('getValues'),
   valueService.getValues
 );
 
 /**
 * Create a new position value for the specified PortfolioPosition.
 */
-router.post(`/${Url.PORTFOLIOS}/:portfolioId/${Url.POSITIONS}/:positionId/${Url.VALUES}`, checkJwt, checkScopes,
-  valueService.validate('createValue', parseUserId()),
+router.post(`/${Url.PORTFOLIOS}/:portfolioId/${Url.POSITIONS}/:positionId/${Url.VALUES}`, checkJwt, checkScopes, setUser,
+  valueService.validate('createValue'),
   valueService.createValue
 );
 
 /**
  * Get all the categories of a Portfolio.
  */
-router.get(`/${Url.PORTFOLIOS}/:portfolioId/${Url.CATEGORIES}`, checkJwt, checkScopes,
-  categoryService.validate('getCategories', parseUserId()),
+router.get(`/${Url.PORTFOLIOS}/:portfolioId/${Url.CATEGORIES}`, checkJwt, checkScopes, setUser,
+  categoryService.validate('getCategories'),
   categoryService.getCategories
 );
 
-function parseUserId(): string {
-  return "tobias";
+function parseUserId(req: any): string {
+  return req.body.userId;
 }
 
 // mount the router on the server

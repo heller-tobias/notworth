@@ -24,7 +24,10 @@ export class PortfolioOverviewComponent implements OnInit {
   }
 
   getPortfolio(): void {
-    const id = this.route.snapshot.paramMap.get('id')
+    let id = this.route.snapshot.paramMap.get('id')
+    if(! id && this.portfolio){
+      id = this.portfolio?.id;
+    }
     if (id) {
       this.portfolioService.getPortfolio(id)
         .subscribe(portfolio => {this.portfolio = portfolio; this.getChartData()});

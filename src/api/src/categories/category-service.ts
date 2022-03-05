@@ -15,11 +15,11 @@ class CategoryService {
         this.db.init();
     }
 
-    validate(method, userId) {
+    validate(method) {
         switch (method) {
             case 'getCategories': {
                 return [
-                    param('portfolioId', 'portfolio does not exist').exists().isString().bail().custom((value, { req }) => this.portfolioService.portfolioExists(value, userId, { req })),
+                    param('portfolioId', 'portfolio does not exist').exists().isString().bail().custom((value, { req }) => this.portfolioService.portfolioExists(value, req.body.userId, { req })),
                 ]
             }
         }
