@@ -15,11 +15,11 @@
       <ul>
       </ul>
       <ul>
-        <li><a routerLink="/view">View</a></li>
-        <li><a routerLink="/edit">Add</a></li>
-        <li *ngIf="auth.isAuthenticated$ | async;"><a routerLink="/user">User</a></li>
+        <li *ngIf="auth.isAuthenticated$ | async;"><a routerLink="/view">View</a></li>
+        <li *ngIf="auth.isAuthenticated$ | async;"><a routerLink="/edit">Add</a></li>
+        <li *ngIf="auth.isAuthenticated$ | async;" ><a routerLink="/user">User</a></li>
         <li>
-          <app-auth-button></app-auth-button>
+          <app-auth-button *ngIf="!(auth.isAuthenticated$| async);"></app-auth-button>
         </li>
       </ul>
     </nav>
