@@ -19,6 +19,10 @@ import { NewDateValidatorDirective } from './directives/newdatevalidator.directi
 import { PositionOverviewComponent } from './position-overview/position-overview.component';
 import { NgxChartsModule }from '@swimlane/ngx-charts';
 import { ValueLineGraphComponent } from './value-line-graph/value-line-graph.component';
+import { AuthModule } from '@auth0/auth0-angular';
+import { AuthButtonComponent } from './login/auth-button';
+import { UserProfileComponent } from './login/user-profile';
+import { WelcomeComponent } from './welcome/welcome.component';
 
 @NgModule({
   declarations: [
@@ -35,14 +39,21 @@ import { ValueLineGraphComponent } from './value-line-graph/value-line-graph.com
     NoFutureDateValidatorDirective,
     NewDateValidatorDirective,
     PositionOverviewComponent,
-    ValueLineGraphComponent
+    ValueLineGraphComponent,
+    AuthButtonComponent,
+    UserProfileComponent,
+    WelcomeComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     AppRoutingModule,
     HttpClientModule,
-    NgxChartsModule
+    NgxChartsModule,
+    AuthModule.forRoot({
+      domain: 'dev-3p-kd7td.eu.auth0.com',
+      clientId: 'TBHl2nfn0FG9VSoA1sBJemgYc4IAGuMU'
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -18,6 +18,7 @@
     "@angular/platform-browser": "~13.2.0",
     "@angular/platform-browser-dynamic": "~13.2.0",
     "@angular/router": "~13.2.0",
+    "@auth0/auth0-angular": "^1.9.0",
     "@swimlane/ngx-charts": "^20.1.0",
     "@types/d3-scale": "^4.0.2",
     "rxjs": "~7.5.0",

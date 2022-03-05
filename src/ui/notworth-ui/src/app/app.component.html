@@ -10,20 +10,28 @@
     <nav>
       <ul>
         <img class="icon" src="http://localhost:3000/static/icon.png">
-        <li><strong>  NotWorth</strong></li>
+        <li><strong> NotWorth</strong></li>
       </ul>
       <ul>
       </ul>
       <ul>
-        <li><a routerLink="/view">View networth</a></li>
-        <li><a routerLink="/edit">Add data</a></li>
+        <li><a routerLink="/view">View</a></li>
+        <li><a routerLink="/edit">Add</a></li>
+        <li *ngIf="auth.isAuthenticated$ | async;"><a routerLink="/user">User</a></li>
+        <li>
+          <app-auth-button></app-auth-button>
+        </li>
       </ul>
     </nav>
   </header>
   <main class="container">
-    <router-outlet></router-outlet>
+    <router-outlet *ngIf="auth.isAuthenticated$ | async; else loggedOut" ></router-outlet>
+    <ng-template #loggedOut>
+        <app-welcome></app-welcome>
+    </ng-template>
     <article>
       (C) Tobias Heller 2022
     </article>
   </main>
+  
 </body>
