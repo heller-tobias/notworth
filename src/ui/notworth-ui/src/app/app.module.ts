@@ -56,23 +56,19 @@ import { AuthHttpInterceptor } from '@auth0/auth0-angular';
       clientId: 'TBHl2nfn0FG9VSoA1sBJemgYc4IAGuMU',
     
       // Request this audience at user authentication time
-      audience: 'https://dev-3p-kd7td.eu.auth0.com/api/v2/',
+      audience: 'http://localhost:3000',
     
       // Request this scope at user authentication time
-      scope: 'read:current_user',
+      scope: 'read:user',
     
       // Specify configuration for the interceptor              
       httpInterceptor: {
         allowedList: [
           {
-            // Match any request that starts 'https://dev-3p-kd7td.eu.auth0.com/api/v2/' (note the asterisk)
-            uri: 'https://dev-3p-kd7td.eu.auth0.com/api/v2/*',
+            uri: 'http://localhost:3000/*',
             tokenOptions: {
-              // The attached token should target this audience
-              audience: 'https://dev-3p-kd7td.eu.auth0.com/api/v2/',
-    
-              // The attached token should have these scopes
-              scope: 'read:current_user'
+              audience: 'http://localhost:3000',
+              scope: 'read:user'
             }
           }
         ]
