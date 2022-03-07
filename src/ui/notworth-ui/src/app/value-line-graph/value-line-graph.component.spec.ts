@@ -8,9 +8,8 @@ describe('ValueLineGraphComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ValueLineGraphComponent ]
-    })
-    .compileComponents();
+      declarations: [ValueLineGraphComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

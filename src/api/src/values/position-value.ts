@@ -1,9 +1,9 @@
-interface PositionValue{
-    id: string,
-    portfolioId: string,
-    positionId: string,
-    value: number,
-    date: string
+interface PositionValue {
+  id: string;
+  portfolioId: string;
+  positionId: string;
+  value: number;
+  date: string;
 }
 
-export { PositionValue }
+export { PositionValue };

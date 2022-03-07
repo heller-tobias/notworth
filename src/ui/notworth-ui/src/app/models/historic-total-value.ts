@@ -1,4 +1,4 @@
-export interface HistoricTotalValue{
-    totalValue: number,
-    date: Date
+export interface HistoricTotalValue {
+  totalValue: number;
+  date: Date;
 }

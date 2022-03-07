@@ -17,7 +17,7 @@ import { ValueCreationComponent } from './value-creation/value-creation.componen
 import { NoFutureDateValidatorDirective } from './directives/nofuturedatevalidator.directive';
 import { NewDateValidatorDirective } from './directives/newdatevalidator.directive';
 import { PositionOverviewComponent } from './position-overview/position-overview.component';
-import { NgxChartsModule }from '@swimlane/ngx-charts';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { ValueLineGraphComponent } from './value-line-graph/value-line-graph.component';
 import { AuthModule } from '@auth0/auth0-angular';
 import { AuthButtonComponent } from './login/auth-button.component';
@@ -43,7 +43,7 @@ import { environment } from 'src/environments/environment';
     ValueLineGraphComponent,
     AuthButtonComponent,
     UserProfileComponent,
-    WelcomeComponent
+    WelcomeComponent,
   ],
   imports: [
     BrowserModule,
@@ -55,30 +55,30 @@ import { environment } from 'src/environments/environment';
       // The domain and clientId were configured in the previous chapter
       domain: 'dev-3p-kd7td.eu.auth0.com',
       clientId: 'TBHl2nfn0FG9VSoA1sBJemgYc4IAGuMU',
-    
+
       // Request this audience at user authentication time
       audience: 'http://localhost:3000',
-    
+
       // Request this scope at user authentication time
       scope: 'read:user',
-    
-      // Specify configuration for the interceptor              
+
+      // Specify configuration for the interceptor
       httpInterceptor: {
         allowedList: [
           {
             uri: environment.apiURL + '/*',
             tokenOptions: {
-              audience:  'http://localhost:3000',
-              scope: 'read:user'
-            }
-          }
-        ]
-      }
-    })
+              audience: 'http://localhost:3000',
+              scope: 'read:user',
+            },
+          },
+        ],
+      },
+    }),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthHttpInterceptor, multi: true },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

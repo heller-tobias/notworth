@@ -1,11 +1,11 @@
 module.exports = {
-    mongodbMemoryServerOptions: {
-      binary: {
-        skipMD5: true,
-      },
-      autoStart: false,
-      instance: {},
+  mongodbMemoryServerOptions: {
+    binary: {
+      skipMD5: true,
     },
-  
-    useSharedDBForAllJestWorkers: false,
+    autoStart: false,
+    instance: {},
+  },
+
+  useSharedDBForAllJestWorkers: false,
 };

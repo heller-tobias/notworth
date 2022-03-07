@@ -8,9 +8,8 @@ describe('TotalCurrentValueComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TotalCurrentValueComponent ]
-    })
-    .compileComponents();
+      declarations: [TotalCurrentValueComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

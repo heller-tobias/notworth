@@ -1,4 +1,4 @@
-export interface PositionCreatedEvent{
-    positionId: string,
-    portfolioId: string
+export interface PositionCreatedEvent {
+  positionId: string;
+  portfolioId: string;
 }

@@ -7,9 +7,8 @@ describe('AllPortfoliosDashboardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AllPortfoliosDashboardComponent ]
-    })
-    .compileComponents();
+      declarations: [AllPortfoliosDashboardComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

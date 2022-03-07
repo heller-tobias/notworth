@@ -8,9 +8,8 @@ describe('ValueCreationComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ValueCreationComponent ]
-    })
-    .compileComponents();
+      declarations: [ValueCreationComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

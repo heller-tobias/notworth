@@ -9,19 +9,21 @@ import { PortfolioService } from '../portfolio.service';
 @Component({
   selector: 'app-value-creation',
   templateUrl: './value-creation.component.html',
-  styleUrls: ['./value-creation.component.scss']
+  styleUrls: ['./value-creation.component.scss'],
 })
 export class ValueCreationComponent implements OnInit {
-
   @Input() portfolio?: Portfolio;
   @Input() position?: Position;
   @Input() value: Value;
   @Output() created = new EventEmitter<Object>();
   currency: string = 'CHF';
-  currentDate: string = new Date().toISOString().split("T")[0];
+  currentDate: string = new Date().toISOString().split('T')[0];
   forbiddenDates: Array<Date> = [];
 
-  constructor(private portfolioService: PortfolioService, private messageService: MessageService) {
+  constructor(
+    private portfolioService: PortfolioService,
+    private messageService: MessageService
+  ) {
     this.value = DefaultValue;
   }
 
@@ -32,23 +34,27 @@ export class ValueCreationComponent implements OnInit {
   createValue() {
     console.log(this.value);
     if (this.portfolio && this.position) {
-      this.portfolioService.createValue(this.portfolio, this.position, this.value).subscribe(valueId => {
-        console.log(valueId);
-        this.created.emit({"positionId": this.position?.id, "portfolioId": this.portfolio?.id, "valueId": valueId});
-      });
-
+      this.portfolioService
+        .createValue(this.portfolio, this.position, this.value)
+        .subscribe((valueId) => {
+          console.log(valueId);
+          this.created.emit({
+            positionId: this.position?.id,
+            portfolioId: this.portfolio?.id,
+            valueId: valueId,
+          });
+        });
     } else {
-      console.error("Unable to create Value");
+      console.error('Unable to create Value');
     }
   }
 
-  private getForbiddenDates(): Array<Date>{
-    if(this.position){
-      console.log("return a list");
-      return this.position?.values.map(value => value.date);
+  private getForbiddenDates(): Array<Date> {
+    if (this.position) {
+      console.log('return a list');
+      return this.position?.values.map((value) => value.date);
     }
-    console.log("return empty list");
+    console.log('return empty list');
     return [];
   }
-
 }

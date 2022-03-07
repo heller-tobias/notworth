@@ -1,7 +1,7 @@
-interface Portfolio{
-    id: string,
-    name: string,
-    description: string
+interface Portfolio {
+  id: string;
+  name: string;
+  description: string;
 }
 
-export { Portfolio }
+export { Portfolio };

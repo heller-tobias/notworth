@@ -8,9 +8,8 @@ describe('NotWorthEditComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NotWorthEditComponent ]
-    })
-    .compileComponents();
+      declarations: [NotWorthEditComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

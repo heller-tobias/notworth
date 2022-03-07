@@ -8,9 +8,8 @@ describe('NotWorthViewComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NotWorthViewComponent ]
-    })
-    .compileComponents();
+      declarations: [NotWorthViewComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

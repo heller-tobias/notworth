@@ -1,8 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Url = exports.PayloadKey = void 0;
-class PayloadKey {
-}
+class PayloadKey {}
 exports.PayloadKey = PayloadKey;
 PayloadKey.VALUES = "values";
 PayloadKey.VALUE = "value";
@@ -13,8 +12,7 @@ PayloadKey.CURRENT_VALUE = "currentTotalValue";
 PayloadKey.HISTORIC_VALUE = "historicTotalValue";
 PayloadKey.TOTAL_VALUE = "totalValue";
 PayloadKey.DATE = "date";
-class Url {
-}
+class Url {}
 exports.Url = Url;
 Url.VALUES = "values";
 Url.POSITIONS = "positions";

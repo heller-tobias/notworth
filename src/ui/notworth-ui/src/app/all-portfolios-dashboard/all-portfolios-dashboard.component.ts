@@ -4,17 +4,13 @@ import { Portfolio } from '../models/portfolio';
 @Component({
   selector: 'app-all-portfolios-dashboard',
   templateUrl: './all-portfolios-dashboard.component.html',
-  styleUrls: ['./all-portfolios-dashboard.component.scss']
+  styleUrls: ['./all-portfolios-dashboard.component.scss'],
 })
 export class AllPortfoliosDashboardComponent implements OnInit {
   @Input() portfolios?: Array<Portfolio>;
-  currency: string = "CHF";
-  
-  constructor() { 
-    
-  }
+  currency: string = 'CHF';
 
-  ngOnInit(): void {
-  }
+  constructor() {}
 
+  ngOnInit(): void {}
 }

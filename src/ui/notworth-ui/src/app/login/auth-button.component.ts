@@ -18,5 +18,8 @@ import { DOCUMENT } from '@angular/common';
   styles: [],
 })
 export class AuthButtonComponent {
-  constructor(@Inject(DOCUMENT) public document: Document, public auth: AuthService) {}
+  constructor(
+    @Inject(DOCUMENT) public document: Document,
+    public auth: AuthService
+  ) {}
 }

@@ -1,48 +1,51 @@
 import { Directive, forwardRef, Input } from '@angular/core';
-import { Validator, NG_VALIDATORS, ValidatorFn, FormControl } from '@angular/forms';
+import {
+  Validator,
+  NG_VALIDATORS,
+  ValidatorFn,
+  FormControl,
+} from '@angular/forms';
 
 @Directive({
-    selector: '[appNewDateValidator]',
-    providers: [
-        {
-            provide: NG_VALIDATORS,
-            useExisting: forwardRef(() => NewDateValidatorDirective),
-            multi: true
-        }
-    ]
+  selector: '[appNewDateValidator]',
+  providers: [
+    {
+      provide: NG_VALIDATORS,
+      useExisting: forwardRef(() => NewDateValidatorDirective),
+      multi: true,
+    },
+  ],
 })
 export class NewDateValidatorDirective implements Validator {
+  validator: ValidatorFn;
 
-    validator: ValidatorFn;
+  @Input('appNewDateValidator') forbiddenDates: any = [];
+  set setter(state: any) {
+    console.log('state: ' + state);
+    this.forbiddenDates = state;
+  }
 
-    @Input('appNewDateValidator') forbiddenDates: any = [];
-    set setter (state: any) {
-        console.log("state: " + state);
-        this.forbiddenDates = state;
-    };
+  constructor() {
+    this.validator = this.dateValidator();
+  }
 
-    constructor() {
-        this.validator = this.dateValidator();
-    }
+  validate(c: FormControl) {
+    return this.validator(c);
+  }
 
-    validate(c: FormControl) {
-        return this.validator(c);
-    }
-
-    dateValidator(): ValidatorFn {
-        return (control: any) => {
-            console.log(control);
-            console.log("forbiddenDates: " + this.forbiddenDates);
-            if (control.value != null && control.value !== '') {
-                if(! this.forbiddenDates.includes(control.value)){
-                    return null;
-                }
-                else {
-                    return {newdatevalidator: { valid: false }};
-                }
-            } else {
-                return null;
-            }
+  dateValidator(): ValidatorFn {
+    return (control: any) => {
+      console.log(control);
+      console.log('forbiddenDates: ' + this.forbiddenDates);
+      if (control.value != null && control.value !== '') {
+        if (!this.forbiddenDates.includes(control.value)) {
+          return null;
+        } else {
+          return { newdatevalidator: { valid: false } };
         }
-    }
-}   
+      } else {
+        return null;
+      }
+    };
+  }
+}

@@ -1,3 +1,3 @@
-export interface PortfolioCreatedEvent{
-    portfolioId: string
+export interface PortfolioCreatedEvent {
+  portfolioId: string;
 }

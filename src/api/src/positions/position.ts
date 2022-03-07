@@ -1,9 +1,9 @@
-interface Position{
-    id: string,
-    name: string,
-    description: string,
-    portfolioId: string,
-    category: string
+interface Position {
+  id: string;
+  name: string;
+  description: string;
+  portfolioId: string;
+  category: string;
 }
 
-export { Position }
+export { Position };

@@ -8,15 +8,18 @@ import { PositionOverviewComponent } from './position-overview/position-overview
 
 const routes: Routes = [
   { path: '', redirectTo: '/view', pathMatch: 'full' },
-  { path: 'view', component: NotWorthViewComponent},
+  { path: 'view', component: NotWorthViewComponent },
   { path: 'edit', component: NotWorthEditComponent },
   { path: 'user', component: UserProfileComponent },
   { path: 'view/portfolios/:id', component: PortfolioOverviewComponent },
-  { path: 'view/portfolios/:portfolioId/positions/:id', component: PositionOverviewComponent },
+  {
+    path: 'view/portfolios/:portfolioId/positions/:id',
+    component: PositionOverviewComponent,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
