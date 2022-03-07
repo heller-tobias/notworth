@@ -1,18 +1,23 @@
-<table *ngIf="positions?.length != 0" role="grid">
-    <thead>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Category</th>
-            <th scope="col">Current Value</th>
-            <th scope="col">Last Update</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let position of positions" [routerLink]="['positions', position.id]">
-            <td>{{position.name}}</td>
-            <td>{{position.category}}</td>
-            <td>{{getCurrentValue(position.id) | currency: currency}}</td>
-            <td>{{getLastUpdate(position.id) | date}}</td>
-        </tr>
-    </tbody>
-</table>
+<span *ngIf="positions?.length != 0">
+    <h3>Positions</h3>
+    <table role="grid">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Category</th>
+                <th scope="col">Current Value</th>
+                <th scope="col">Last Update</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let position of positions" [routerLink]="['positions', position.id]">
+                <a>
+                    <td>{{position.name}}</td>
+                </a>
+                <td>{{position.category}}</td>
+                <td>{{getCurrentValue(position.id) | currency: currency}}</td>
+                <td>{{getLastUpdate(position.id) | date}}</td>
+            </tr>
+        </tbody>
+    </table>
+</span>

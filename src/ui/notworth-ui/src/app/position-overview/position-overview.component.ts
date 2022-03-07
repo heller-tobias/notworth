@@ -16,6 +16,7 @@ export class PositionOverviewComponent implements OnInit {
   currency: string = 'CHF';
   chartData?: Array<any>;
   colors?: Array<any>;
+  title: string = "Historical value in CHF";
 
   constructor(
     private route: ActivatedRoute,

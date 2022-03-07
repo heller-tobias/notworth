@@ -1,3 +1,4 @@
+import { ThisReceiver } from '@angular/compiler';
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MessageService } from '../message.service';
@@ -10,16 +11,22 @@ import { PortfolioService } from '../portfolio.service';
   styleUrls: ['./portfolio-overview.component.scss'],
 })
 export class PortfolioOverviewComponent implements OnInit {
+
   @Input() portfolio?: Portfolio;
-  chartData?: Array<any>;
+  pieData?: Array<any>;
+  lineData?: Array<any>;
   colors: Array<any>;
+  allCategories: any = {};
+
+  historicalValueTitle: string = "Historical value in CHF";
+  distributionValueTitle: string = "Wealth distribution";
 
   constructor(
     private route: ActivatedRoute,
     private portfolioService: PortfolioService,
     private messageService: MessageService
   ) {
-    this.colors = this.getColors();
+    this.colors = this.getInitialColors();
   }
 
   ngOnInit(): void {
@@ -34,13 +41,15 @@ export class PortfolioOverviewComponent implements OnInit {
     if (id) {
       this.portfolioService.getPortfolio(id).subscribe((portfolio) => {
         this.portfolio = portfolio;
-        this.getChartData();
+        this.getLineData();
+        this.getPieData();
+        this.getUpdatedColors();
       });
     }
   }
 
-  private getChartData(): void {
-    this.chartData = [];
+  private getLineData(): void {
+    this.lineData = [];
     let totalValue: any = { name: 'Total Value' };
     const totalValueSeries = [];
     if (this.portfolio?.historicTotalValue) {
@@ -53,13 +62,47 @@ export class PortfolioOverviewComponent implements OnInit {
       totalValue.series = totalValueSeries.reverse();
     }
 
-    this.chartData.push(totalValue);
+    this.lineData.push(totalValue);
   }
 
-  private getColors() {
+  private getPieData(): void {
+    this.pieData = [];
+    this.allCategories = {};
+    if (this.portfolio?.positions) {
+      for (const position of this.portfolio?.positions) {
+        if(position.values.length >0){
+          if(position.category in this.allCategories){
+            this.allCategories[position.category] += position.values[0].value;
+          }
+          else{
+            this.allCategories[position.category] = position.values[0].value;
+          }
+        }
+      }
+      for(const [category, value] of Object.entries(this.allCategories)){
+        this.pieData.push({
+          name: category,
+          value: value,
+        });
+      }
+    }
+  }
+
+  private getInitialColors() {
     return [
-      { name: 'Total Value', value: '#457B9D' },
-      { name: 'b', value: '#ff0000' },
+      { name: 'Total Value', value: '#457B9D' }
     ];
+  }
+
+  private getUpdatedColors(){
+    this.colors = this.getInitialColors();
+    const allColors = ['#1D3557', '#457B9D', '#A8DADC', '#E63946', '#F1FAEE'];
+    let counter = 0;
+    if(this.portfolio?.positions){
+      for(const category of Object.keys(this.allCategories)){
+        this.colors.push({name: category, value: allColors[counter%allColors.length]});
+        counter ++;
+      }
+    }
   }
 }

@@ -10,9 +10,12 @@
         </i>
     </article>
     <article *ngIf="portfolio?.historicTotalValue?.length != 1">
-        <app-value-line-graph [chartData]="chartData" [colors]="colors"></app-value-line-graph>
-    </article>
+        <app-value-line-graph [chartData]="lineData" [colors]="colors" [title]="historicalValueTitle"></app-value-line-graph>
+    </article>¨
     <article>
         <app-positions-overview [positions]="portfolio.positions"></app-positions-overview>
+    </article>
+    <article *ngIf="portfolio?.historicTotalValue?.length != 1">
+        <app-value-distribution-pie [chartData]="pieData" [colors]="colors" [title]="distributionValueTitle"></app-value-distribution-pie>
     </article>
 </div>

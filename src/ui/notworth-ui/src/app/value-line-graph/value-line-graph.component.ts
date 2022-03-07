@@ -6,6 +6,8 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./value-line-graph.component.scss'],
 })
 export class ValueLineGraphComponent implements OnInit {
+  
+  @Input() title?: string = "";
   @Input() colors?: Array<any>;
   @Input() chartData?: Array<any>;
   view: [number, number] = [1100, 350];

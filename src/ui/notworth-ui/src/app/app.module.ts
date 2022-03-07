@@ -25,6 +25,7 @@ import { UserProfileComponent } from './login/user-profile.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { AuthHttpInterceptor } from '@auth0/auth0-angular';
 import { environment } from 'src/environments/environment';
+import { ValueDistributionPieComponent } from './value-distribution-pie/value-distribution-pie.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,6 +45,7 @@ import { environment } from 'src/environments/environment';
     AuthButtonComponent,
     UserProfileComponent,
     WelcomeComponent,
+    ValueDistributionPieComponent,
   ],
   imports: [
     BrowserModule,
