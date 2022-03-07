@@ -54,6 +54,10 @@ class CategoryService {
         {
             "name": "retirement",
             "description": "All my retirement accounts."
+        },
+        {
+            "name": "realestate",
+            "description": "All my real estate."
         }
         ]
     }
