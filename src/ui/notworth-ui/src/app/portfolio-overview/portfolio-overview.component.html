@@ -1,10 +1,16 @@
 <h1>Portfolio Overview</h1>
 <div *ngIf="portfolio">
-    <article class="overview"><strong>{{portfolio.name}}</strong>
-        <app-total-current-value [currentTotalValue]="portfolio.currentTotalValue"></app-total-current-value>
+    <article>
+        <div class="overview">
+            <strong>{{portfolio.name}}</strong>
+            <app-total-current-value [currentTotalValue]="portfolio.currentTotalValue"></app-total-current-value>
+        </div>
+        <i>
+            {{portfolio?.description}}
+        </i>
     </article>
     <article *ngIf="portfolio?.historicTotalValue?.length != 1">
-        <app-value-line-graph  [chartData]="chartData" [colors]="colors"></app-value-line-graph>
+        <app-value-line-graph [chartData]="chartData" [colors]="colors"></app-value-line-graph>
     </article>
     <article>
         <app-positions-overview [positions]="portfolio.positions"></app-positions-overview>

@@ -1,11 +1,20 @@
-<article class="overview">
-    <div>
-        <strong>{{position?.name}}</strong>
-        <p>{{position?.category}}</p>
+<article>
+    <div class="overview">
+        <div>
+            <strong>{{position?.name}}</strong>   
+            <p>{{position?.category}}</p>
+        </div>
+        <app-total-current-value [currentTotalValue]="currentTotalValue"></app-total-current-value>
+
     </div>
-    <app-total-current-value [currentTotalValue]="currentTotalValue"></app-total-current-value>
+    <i>
+        {{position?.description}}
+    </i>
 </article>
-<article *ngIf="position?.values?.length != 0 && position?.values?.length != 1">
+<article>
+
+</article>
+<article>
     <app-value-line-graph [colors]="colors" [chartData]="chartData"></app-value-line-graph>
 </article>
 <article *ngIf="position?.values?.length != 0">
