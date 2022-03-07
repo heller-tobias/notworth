@@ -2,6 +2,7 @@ const { auth } = require('express-oauth2-jwt-bearer');
 const { requiredScopes } = require('express-oauth2-jwt-bearer');
 const checkScopes = requiredScopes('read:user');
 const jwt = require('jsonwebtoken');
+require("dotenv").config();
 
 export const checkJwt = auth({
     audience: 'http://localhost:3000',

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
 import { filter, mergeMap } from 'rxjs';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -8,6 +9,7 @@ import { filter, mergeMap } from 'rxjs';
 })
 export class AppComponent {
   title = 'notworth-ui';
+  iconUrl: String = environment.apiURL + "/static/icon.png";
   constructor(public auth: AuthService){
     
   }

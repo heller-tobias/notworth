@@ -6,13 +6,14 @@ import { Category } from './models/category';
 import { Portfolio } from './models/portfolio';
 import { Position } from './models/position';
 import { Value } from './models/value';
+import { environment } from './../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PortfolioService {
 
-  private baseURL = `http://localhost:3000/`;
+  private baseURL =  environment.apiURL + '/';
   private portfoliosURL = `portfolios`;
   private positionsURL = `positions`;
   private valuesURL = `values`;
@@ -29,6 +30,7 @@ export class PortfolioService {
 
   /** GET Portfolios from the server */
   getPortfolios(): Observable<Portfolio[]> {
+    console.log(this.baseURL);
     return this.http.get<Portfolio[]>(`${this.baseURL}${this.portfoliosURL}`)
       .pipe(
         tap(_ => this.log('fetched Portfolios')),

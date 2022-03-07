@@ -13,7 +13,7 @@ require('dotenv').config()
 
 const path = require('path')
 const server = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 server.use(bodyParser.json());
 let router = express.Router();
 

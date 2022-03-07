@@ -82,6 +82,7 @@ export class NotWorthEditComponent implements OnInit {
   selectPortfolio() {
     console.log("select portfolio with id: " + this.portfolioToSelectId);
     const filtered: Array<Portfolio> = this.portfolios.filter(portfolio => portfolio.id == this.portfolioToSelectId);
+    console.log(this.portfolios);
     if (filtered.length > 0) {
       console.log("set selected portfolio: " + filtered[0]);
       this.selectedPortfolio = filtered[0];

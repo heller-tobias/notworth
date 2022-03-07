@@ -24,6 +24,7 @@ import { AuthButtonComponent } from './login/auth-button.component';
 import { UserProfileComponent } from './login/user-profile.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { AuthHttpInterceptor } from '@auth0/auth0-angular';
+import { environment } from 'src/environments/environment';
 @NgModule({
   declarations: [
     AppComponent,
@@ -65,9 +66,9 @@ import { AuthHttpInterceptor } from '@auth0/auth0-angular';
       httpInterceptor: {
         allowedList: [
           {
-            uri: 'http://localhost:3000/*',
+            uri: environment.apiURL + '/*',
             tokenOptions: {
-              audience: 'http://localhost:3000',
+              audience:  'http://localhost:3000',
               scope: 'read:user'
             }
           }
