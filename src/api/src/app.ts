@@ -70,7 +70,6 @@ router.get(
   setUser,
   (req, res, nex) => {
     const userId = parseUserId(req);
-    console.log(userId);
     portfolioService.getPortfolios(userId).then((result) => {
       res.json(result);
     });
@@ -87,9 +86,7 @@ router.get(
   setUser,
   (req, res, nex) => {
     const userId = parseUserId(req);
-    console.log(userId);
     portfolioService.getPortfolioById(userId, req.params.id).then((result) => {
-      console.log(result);
       if (!result) {
         res.status(404);
         res.end();

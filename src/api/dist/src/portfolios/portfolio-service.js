@@ -57,10 +57,8 @@ class PortfolioService {
     this.portfolioExists = (value, userId, { req }) =>
       __awaiter(this, void 0, void 0, function* () {
         if (yield this.getPortfolioById(userId, req.params.portfolioId)) {
-          console.log("resolve portfolioExists");
           return Promise.resolve();
         } else {
-          console.log("reject");
           return Promise.reject();
         }
       });

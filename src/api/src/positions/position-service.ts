@@ -76,10 +76,8 @@ class PositionService {
         req.params.positionId
       )
     ) {
-      console.log("resolve positionExists");
       return Promise.resolve();
     } else {
-      console.log("reject");
       return Promise.reject();
     }
   };

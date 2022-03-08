@@ -21,15 +21,15 @@ class MongoDatabase implements NotworthDatabase {
 
   async init() {
     const mongoClient = new MongoClient(this.connectionString);
-    console.log("Connecting to server...");
+    console.log("MongoDatabase - Connecting to server...");
     this.client = await mongoClient.connect();
-    console.log("Connected correctly to server");
+    console.log(" MongoDatabase - Connected correctly to server");
     this.db = this.client.db("notworth");
   }
 
   async addPortfolio(userId: string, portfolio: Portfolio) {
+    console.log(`MongoDatabase - add Portfolio with id: ${portfolio.id} - name: ${portfolio.name} for user: ${userId}`)
     let id: string = uuidv4();
-    console.log(id);
     portfolio["id"] = id;
     portfolio["userId"] = userId;
     this.db.collection(this.portfoliosCollection).insertOne(portfolio);
@@ -37,6 +37,7 @@ class MongoDatabase implements NotworthDatabase {
   }
 
   async getPortfolios(userId: string) {
+    console.log(`MongoDatabase - getPortfolios for user: ${userId}`)
     return this.db
       .collection(this.portfoliosCollection)
       .find({ userId: userId }, { projection: { _id: 0, userId: 0 } })
@@ -47,6 +48,7 @@ class MongoDatabase implements NotworthDatabase {
     userId: string,
     portfolioId: string
   ): Promise<Portfolio[]> {
+    console.log(`MongoDatabase - getPortfolioById with id: ${portfolioId} for user: ${userId}`)
     return this.db
       .collection(this.portfoliosCollection)
       .findOne(
@@ -56,6 +58,7 @@ class MongoDatabase implements NotworthDatabase {
   }
 
   async addPosition(userId: string, position: Position) {
+    console.log(`MongoDatabase - add Position with id: ${position.id} - portfolio: ${position.portfolioId} - name: ${position.name} for user: ${userId}`)
     let id: string = uuidv4();
     position["id"] = id;
     position["userId"] = userId;
@@ -64,6 +67,7 @@ class MongoDatabase implements NotworthDatabase {
   }
 
   async getPositions(userId: string, portfolioId: string) {
+    console.log(`MongoDatabase - getPositions for portfolio with id: ${portfolioId} for user: ${userId}`)
     return this.db
       .collection(this.positionsCollection)
       .find(
@@ -78,6 +82,7 @@ class MongoDatabase implements NotworthDatabase {
     portfolioId: string,
     positionId: string
   ) {
+    console.log(`MongoDatabase - getPositionById with id: ${positionId} - portfolio: ${portfolioId} for user: ${userId}`)
     return this.db
       .collection(this.positionsCollection)
       .findOne(
@@ -87,6 +92,7 @@ class MongoDatabase implements NotworthDatabase {
   }
 
   async addValue(userId: string, positionValue: PositionValue) {
+    console.log(`MongoDatabase - add Value with id ${positionValue.id}- position: ${positionValue.positionId} - portfolio: ${positionValue.portfolioId} for user: ${userId}`)
     //TODO: Maybe check that it will overwrite the current value of a date if there is already a positionValue on this date!
     let id: string = uuidv4();
     positionValue["id"] = id;
@@ -96,9 +102,7 @@ class MongoDatabase implements NotworthDatabase {
   }
 
   async getValues(userId: string, portfolioId: string, positionId: string) {
-    console.log(
-      `userId: ${userId}, portfolioId: ${portfolioId}, positionId: ${positionId}`
-    );
+    console.log(`MongoDatabase - getValues position: ${positionId} - portfolio: ${portfolioId} for user: ${userId}`)
     return this.db
       .collection(this.positionsValuesCollection)
       .find(

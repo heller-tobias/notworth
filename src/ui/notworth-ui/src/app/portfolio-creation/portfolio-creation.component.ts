@@ -23,11 +23,9 @@ export class PortfolioCreationComponent implements OnInit {
   ngOnInit(): void {}
 
   createPortfolio() {
-    console.log(this.portfolio);
     this.portfolioService
       .createPortfolio(this.portfolio)
       .subscribe((portfolioId) => {
-        console.log(portfolioId);
         this.created.emit({ portfolioId: portfolioId });
       });
   }
