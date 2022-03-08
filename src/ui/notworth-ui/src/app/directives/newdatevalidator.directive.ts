@@ -21,7 +21,6 @@ export class NewDateValidatorDirective implements Validator {
 
   @Input('appNewDateValidator') forbiddenDates: any = [];
   set setter(state: any) {
-    console.log('state: ' + state);
     this.forbiddenDates = state;
   }
 
@@ -35,8 +34,6 @@ export class NewDateValidatorDirective implements Validator {
 
   dateValidator(): ValidatorFn {
     return (control: any) => {
-      console.log(control);
-      console.log('forbiddenDates: ' + this.forbiddenDates);
       if (control.value != null && control.value !== '') {
         if (!this.forbiddenDates.includes(control.value)) {
           return null;

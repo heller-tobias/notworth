@@ -28,12 +28,9 @@ export class NoFutureDateValidatorDirective implements Validator {
 
   dateValidator(): ValidatorFn {
     return (control: any) => {
-      console.log(control);
       if (control.value != null && control.value !== '') {
         const maxDate = new Date();
         maxDate.setHours(24, 0, 0, 0);
-        console.log(control.value);
-        console.log(maxDate);
         if (new Date(control.value) < maxDate) {
           return null;
         } else {

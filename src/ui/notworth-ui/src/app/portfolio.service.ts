@@ -29,7 +29,6 @@ export class PortfolioService {
 
   /** GET Portfolios from the server */
   getPortfolios(): Observable<Portfolio[]> {
-    console.log(this.baseURL);
     return this.http
       .get<Portfolio[]>(`${this.baseURL}${this.portfoliosURL}`)
       .pipe(
