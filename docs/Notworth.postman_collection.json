@@ -12,6 +12,16 @@
 				{
 					"name": "Portfolios",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -34,14 +44,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}:{{port}}/{{portfolios}}/1",
+							"raw": "{{base_url}}:{{port}}/{{portfolios}}/a141f2f1-5b98-4301-937e-4ddf6a4f1b16",
 							"host": [
 								"{{base_url}}"
 							],
 							"port": "{{port}}",
 							"path": [
 								"{{portfolios}}",
-								"1"
+								"a141f2f1-5b98-4301-937e-4ddf6a4f1b16"
 							]
 						},
 						"description": "Returns one specific portfolio of a user containing the networth and the single positions."
@@ -55,7 +65,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"My Personal Networth\"\r\n}",
+							"raw": "{\r\n    \"name\": \"Hello my friend\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -83,7 +93,7 @@
 			"name": "Categories",
 			"item": [
 				{
-					"name": "Get categories of a portfolio",
+					"name": "Get categories",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -104,7 +114,7 @@
 					"response": []
 				},
 				{
-					"name": "Create a category for a portfolio",
+					"name": "Create a category",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -162,14 +172,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}:{{port}}/{{portfolios}}/1/{{positions}}",
+							"raw": "{{base_url}}:{{port}}/{{portfolios}}/b57ea33c-fce4-4b60-849b-f92b20357478/{{positions}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"port": "{{port}}",
 							"path": [
 								"{{portfolios}}",
-								"1",
+								"b57ea33c-fce4-4b60-849b-f92b20357478",
 								"{{positions}}"
 							]
 						},
@@ -192,14 +202,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}:{{port}}/{{portfolios}}/1/{{positions}}",
+							"raw": "{{base_url}}:{{port}}/{{portfolios}}/b57ea33c-fce4-4b60-849b-f92b20357478/{{positions}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"port": "{{port}}",
 							"path": [
 								"{{portfolios}}",
-								"1",
+								"b57ea33c-fce4-4b60-849b-f92b20357478",
 								"{{positions}}"
 							]
 						},
@@ -213,16 +223,16 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}:{{port}}/{{portfolios}}/1/{{positions}}/1",
+							"raw": "{{base_url}}:{{port}}/{{portfolios}}/b57ea33c-fce4-4b60-849b-f92b20357478/{{positions}}/913ac050-e78a-4684-a0e5-992500c408fa",
 							"host": [
 								"{{base_url}}"
 							],
 							"port": "{{port}}",
 							"path": [
 								"{{portfolios}}",
-								"1",
+								"b57ea33c-fce4-4b60-849b-f92b20357478",
 								"{{positions}}",
-								"1"
+								"913ac050-e78a-4684-a0e5-992500c408fa"
 							]
 						},
 						"description": "Returns a single position in the portfolio."
