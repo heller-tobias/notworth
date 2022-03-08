@@ -29,12 +29,10 @@ export class PositionCreationComponent implements OnInit {
   }
 
   createPosition() {
-    console.log(this.position);
     if (this.portfolio) {
       this.portfolioService
         .createPosition(this.portfolio, this.position)
         .subscribe((positionId) => {
-          console.log(positionId);
           this.created.emit({
             positionId: positionId,
             portfolioId: this.portfolio?.id,
@@ -49,7 +47,7 @@ export class PositionCreationComponent implements OnInit {
     if (this.portfolio) {
       this.portfolioService
         .getCategories(this.portfolio)
-        .subscribe((categories) => (this.categories = categories));
+        .subscribe((categories) => {this.categories = categories; this.position.category = this.categories[0].name});
     }
   }
 }

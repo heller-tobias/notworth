@@ -13,11 +13,11 @@ import { PortfolioService } from '../portfolio.service';
 export class PortfolioOverviewComponent implements OnInit {
 
   @Input() portfolio?: Portfolio;
+  allCategories: any = {};
   pieData?: Array<any>;
   lineData?: Array<any>;
   colors: Array<any>;
-  allCategories: any = {};
-
+  
   historicalValueTitle: string = "Historical value in CHF";
   distributionValueTitle: string = "Wealth distribution";
 

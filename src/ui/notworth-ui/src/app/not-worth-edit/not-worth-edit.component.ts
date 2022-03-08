@@ -43,59 +43,30 @@ export class NotWorthEditComponent implements OnInit {
     //TODO: Set selected again
     this.portfolioService.getPortfolios().subscribe((portfolios) => {
       this.portfolios = portfolios;
-      console.log(
-        'selected portfolio 1: ' +
-          this.selectedPortfolio.id +
-          ' ' +
-          this.selectedPortfolio.name
-      );
       this.selectPortfolio();
       this.selectPosition();
       this.selectValue();
-      console.log(
-        'selected portfolio 2: ' +
-          this.selectedPortfolio.id +
-          ' ' +
-          this.selectedPortfolio.name
-      );
     });
   }
 
   portfolioSelected(): void {
-    console.log(this.selectedPortfolio);
   }
 
   positionSelected(): void {
-    console.log(this.selectedPosition);
   }
 
   onPortfolioCreated(event: PortfolioCreatedEvent | any) {
-    console.log('portolio created with id: ' + event.portfolioId);
     this.portfolioToSelectId = event.portfolioId;
     this.getPortfolios();
   }
 
   onPositionCreated(event: PositionCreatedEvent | any) {
-    console.log(
-      'portolio  with id: ' +
-        event.portfolioId +
-        ' position created with id: ' +
-        event.positionId
-    );
     this.portfolioToSelectId = event.portfolioId;
     this.positionToSelectId = event.positionId;
     this.getPortfolios();
   }
 
   onValueCreated(event: ValueCreatedEvent | any) {
-    console.log(
-      'portolio  with id: ' +
-        event.portfolioId +
-        ' position  with id: ' +
-        event.positionId +
-        ' value created with id: ' +
-        event.valueId
-    );
     this.portfolioToSelectId = event.portfolioId;
     this.positionToSelectId = event.positionId;
     this.valueToSelectId = event.valueId;
@@ -103,19 +74,15 @@ export class NotWorthEditComponent implements OnInit {
   }
 
   selectPortfolio() {
-    console.log('select portfolio with id: ' + this.portfolioToSelectId);
     const filtered: Array<Portfolio> = this.portfolios.filter(
       (portfolio) => portfolio.id == this.portfolioToSelectId
     );
-    console.log(this.portfolios);
     if (filtered.length > 0) {
-      console.log('set selected portfolio: ' + filtered[0]);
       this.selectedPortfolio = filtered[0];
     }
   }
 
   selectPosition() {
-    console.log('select position with id: ' + this.positionToSelectId);
     const filteredPortfolios: Array<Portfolio> = this.portfolios.filter(
       (portfolio) => portfolio.id == this.portfolioToSelectId
     );
@@ -125,14 +92,12 @@ export class NotWorthEditComponent implements OnInit {
           (position) => position.id == this.positionToSelectId
         );
       if (filteredPositions.length > 0) {
-        console.log('set selected position: ' + filteredPositions[0]);
         this.selectedPosition = filteredPositions[0];
       }
     }
   }
 
   selectValue() {
-    console.log('select value with id: ' + this.valueToSelectId);
     const filteredPortfolios: Array<Portfolio> = this.portfolios.filter(
       (portfolio) => portfolio.id == this.portfolioToSelectId
     );
@@ -146,7 +111,6 @@ export class NotWorthEditComponent implements OnInit {
           (value) => value.id == this.valueToSelectId
         );
         if (filteredValues.length > 0) {
-          console.log('set selected value: ' + filteredValues[0]);
           this.selectedValue = filteredValues[0];
         }
       }

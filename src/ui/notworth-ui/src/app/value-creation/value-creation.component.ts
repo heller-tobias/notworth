@@ -32,12 +32,10 @@ export class ValueCreationComponent implements OnInit {
   }
 
   createValue() {
-    console.log(this.value);
     if (this.portfolio && this.position) {
       this.portfolioService
         .createValue(this.portfolio, this.position, this.value)
         .subscribe((valueId) => {
-          console.log(valueId);
           this.created.emit({
             positionId: this.position?.id,
             portfolioId: this.portfolio?.id,
@@ -51,10 +49,8 @@ export class ValueCreationComponent implements OnInit {
 
   private getForbiddenDates(): Array<Date> {
     if (this.position) {
-      console.log('return a list');
       return this.position?.values.map((value) => value.date);
     }
-    console.log('return empty list');
     return [];
   }
 }
